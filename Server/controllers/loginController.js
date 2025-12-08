@@ -11,8 +11,8 @@ const clientId = "app-recife"; // cliente fixo app recife
 export const login = async (req, res) => {
   const { username, password } = req.body; // pegando os dados do front
 
-  // Mascarar senha para não aparecer no log
-  const maskedPassword = password ? password.replace(/./g, "*") : ""; 
+  // Mascarar senha para nï¿½o aparecer no log
+  const maskedPassword = password ? password.replace(/./g, "*") : "";
 
   console.log(
     `Tentativa de login com credenciais username=${username} password=${maskedPassword}`
@@ -32,20 +32,20 @@ export const login = async (req, res) => {
     );
 
     const tokenUrl = `${AUTHO_URL}/protocol/openid-connect/token`; // pegando o token
-    
+
     // Tenta pegar o token no servidor externo
     const authResponse = await axios.post(tokenUrl, params.toString(), {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      timeout: 10000, 
+      timeout: 10000,
     });
 
-    const externalToken = authResponse.data.access_token; 
+    const externalToken = authResponse.data.access_token;
     if (!externalToken) {
       console.error("Nenhum token retornado:", authResponse.data);
-      return res.status(500).json({ message: "Token não retornado" });
+      return res.status(500).json({ message: "Token nï¿½o retornado" });
     }
 
-    // Obtendo as informacoes do usuário
+    // Obtendo as informacoes do usuï¿½rio
     const selfResponse = await axios.get(`${API_URL}/api/self`, {
       headers: { Authorization: `Bearer ${externalToken}` },
     });
@@ -57,8 +57,13 @@ export const login = async (req, res) => {
     const document = self.document;
 
     if (!externalId) {
-      console.error("ERRO: Nenhum identificador único encontrado no self:", self);
-      return res.status(500).json({ message: "Não foi possível identificar o usuário" });
+      console.error(
+        "ERRO: Nenhum identificador ï¿½nico encontrado no self:",
+        self
+      );
+      return res
+        .status(500)
+        .json({ message: "Nï¿½o foi possï¿½vel identificar o usuï¿½rio" });
     }
 
     // Salva ou atualiza no banco local (Prisma)
@@ -69,30 +74,36 @@ export const login = async (req, res) => {
     });
 
     // Deu tudo certo!
-    return res.status(200).json({ token: externalToken, message: "Login bem-sucedido" }); 
-
+    return res.status(200).json({
+      token: externalToken,
+      user: {
+        id: localUser.id,
+        name: localUser.name,
+        email: localUser.email,
+        document: localUser.document,
+      },
+      message: "Login bem-sucedido",
+    });
   } catch (error) {
-    
-    // AQUI ESTÁ O CÓDIGO NOVO PARA DESCOBRIR O ERRO
+    // AQUI ESTï¿½ O Cï¿½DIGO NOVO PARA DESCOBRIR O ERRO
 
     console.log("ERRO DETALHADO DA API EXTERNA:");
-    
+
     if (error.response) {
-        // O servidor externo respondeu "Não" (ex: senha errada)
-        console.log("Status:", error.response.status);
-        console.log("Motivo:", error.response.data);
+      // O servidor externo respondeu "Nï¿½o" (ex: senha errada)
+      console.log("Status:", error.response.status);
+      console.log("Motivo:", error.response.data);
     } else {
-        // O servidor nem respondeu
-        console.log("Erro sem resposta (timeout ou link errado):", error.message);
+      // O servidor nem respondeu
+      console.log("Erro sem resposta (timeout ou link errado):", error.message);
     }
-   
 
     const status = error.response?.status || 500;
     const errorMessage =
       error.response?.data?.error_description ||
       error.response?.data?.detail ||
       error.message ||
-      "Falha na realização do login";
+      "Falha na realizaï¿½ï¿½o do login";
 
     return res.status(status).json({ message: errorMessage });
   }

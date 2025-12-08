@@ -17,10 +17,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // --- PONTO CRUCIAL DA CONEX√O ---
-      // 1. Porta 3001 (Conforme seu servidor)
-      // 2. Rota /login (Conforme seu index.js)
-      // 3. Envia 'username' e 'password' (Conforme seu controller espera)
+      // envia 'username' e 'password' (conforme o controller espera)
       const response = await axios.post("http://localhost:3001/login", {
         username: cpf, 
         password: password 
@@ -28,15 +25,18 @@ const Login = () => {
 
       // Se o servidor aceitar:
       localStorage.setItem("token", response.data.token); // Salva o token
+
+      localStorage.setItem("user", JSON.stringify(response.data.user)); // salva o usuario
+
       navigate("/home"); // Vai para a tela do jogo
 
     } catch (err) {
       // Se der erro:
       console.error("Erro no login:", err);
       if (err.response) {
-        setError(err.response.data.message || "Credenciais inv·lidas.");
+        setError(err.response.data.message || "credenciais inv√°lidas.");
       } else {
-        setError("Erro de conex„o. O servidor est· rodando?");
+        setError("Erro de conex√£o. O servidor est√° rodando?");
       }
     } finally {
       setLoading(false);

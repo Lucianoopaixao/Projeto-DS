@@ -34,14 +34,22 @@ export default function Check({ onBack, documentAccepted, setDocumentAccepted })
 
  
    const handleAddMedicine = async () => {
-    // 1. Valida��o b�sica (igual ao seu)
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      alert("Usuário não encontrado. Faça login novamente.");
+      return;
+    }
+
     if (!newMedicine.name || !newMedicine.duration || newMedicine.times.some(t => !t)) {
-      alert("Preencha todos os campos e hor�rios antes de adicionar!");
+      alert("Preencha todos os campos e horários antes de adicionar!");
       return;
     }
 
     // 2. Preparar dados para enviar ao Backend
     const dadosParaEnviar = {
+        usuario_id: user.id,
         nome: newMedicine.name,
         duracao: newMedicine.duration,
         horarios: newMedicine.times

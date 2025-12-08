@@ -30,14 +30,20 @@ export default function RegisterAppointment({ onBack }) {
   };
 
   const handleSubmit = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      alert("Erro: nenhum usuário logado encontrado.");
+      return;
+    }
+
     if (!selectedImage) {
       alert("Por favor, selecione uma imagem primeiro");
       return;
     }
 
     const dadosParaEnviar = {
-      // 1. O Banco exige um ID de usuário (Como ainda não tem login, fixei 1)
-      usuario_id: 1, 
+      usuario_id: user.id, 
 
       // 2. O Banco exige a data da consulta (Enviando a data de agora)
       data_consulta: new Date(), 

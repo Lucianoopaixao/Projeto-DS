@@ -11,21 +11,21 @@ function stringParaData(horarioString) {
     data.setSeconds(0);
     return data;
   } catch (error) {
-    console.log("Erro na conversão, usando data atual:", error);
+    console.log("Erro na conversï¿½o, usando data atual:", error);
     return new Date();
   }
 }
 
 async function criarMedicamento(req, res) {
   try {
-    const { nome, duracao, horarios } = req.body;
+    const { usuario_id, nome, duracao, horarios } = req.body;
 
-    if (!nome || !horarios || horarios.length === 0) {
+    if (!usuario_id || !nome || !horarios || horarios.length === 0) {
       return res.status(400).json({ error: "Dados incompletos" });
     }
 
     const dadosParaSalvar = {
-      usuario_id: 1, 
+      usuario_id: parseInt(usuario_id), 
       nome_medicamento: nome,
       duracao_semanas: parseInt(duracao),
       moedaspcadastro: 5,
