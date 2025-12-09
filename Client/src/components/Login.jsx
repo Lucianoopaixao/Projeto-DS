@@ -1,15 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; 
-import "./Login.css"; 
+import axios from "axios";
+import "./Login.css";
 
 const Login = () => {
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token"); 
+
+    if (token) {
+      navigate("/home", { replace: true });
+    }
+  }, [navigate]);
+
+  const formatarCPF = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,21 +34,18 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // --- PONTO CRUCIAL DA CONEX√O ---
-      // 1. Porta 3001 (Conforme seu servidor)
-      // 2. Rota /login (Conforme seu index.js)
-      // 3. Envia 'username' e 'password' (Conforme seu controller espera)
+      const cpfLimpo = cpf.replace(/\D/g, "");
+
       const response = await axios.post("http://localhost:3001/login", {
-        username: cpf, 
-        password: password 
+        username: cpfLimpo,
+        password: password,
       });
 
-      // Se o servidor aceitar:
-      localStorage.setItem("token", response.data.token); // Salva o token
-      navigate("/home"); // Vai para a tela do jogo
+      sessionStorage.setItem("token", response.data.token);
+
+      navigate("/home", { replace: true });
 
     } catch (err) {
-      // Se der erro:
       console.error("Erro no login:", err);
       if (err.response) {
         setError(err.response.data.message || "Credenciais inv·lidas.");
@@ -46,8 +60,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Sa√∫de em Jogo</h2>
-    
+        <h2>Saude em Jogo</h2>
 
         <form onSubmit={handleLogin}>
           <div className="input-group">
@@ -57,7 +70,7 @@ const Login = () => {
               id="cpf"
               placeholder="000.000.000-00"
               value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
+              onChange={(e) => setCpf(formatarCPF(e.target.value))}
               required
             />
           </div>
