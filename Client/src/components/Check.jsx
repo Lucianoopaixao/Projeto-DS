@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Check.css";
 
-export default function Check({ onBack, documentAccepted, setDocumentAccepted }) {
+export default function Check({ onBack, documentAccepted, setDocumentAccepted, usuarioId }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [medicines, setMedicines] = useState([]);
   const [newMedicine, setNewMedicine] = useState({ name: "", times: [""], duration: "" });
@@ -32,47 +32,40 @@ export default function Check({ onBack, documentAccepted, setDocumentAccepted })
     setNewMedicine({ ...newMedicine, times: updatedTimes });
   };
 
- 
-   const handleAddMedicine = async () => {
-    // 1. Valida��o b�sica (igual ao seu)
+  const handleAddMedicine = async () => {
     if (!newMedicine.name || !newMedicine.duration || newMedicine.times.some(t => !t)) {
-      alert("Preencha todos os campos e hor�rios antes de adicionar!");
+      alert("Preencha todos os campos e horários antes de adicionar!");
       return;
     }
 
-    // 2. Preparar dados para enviar ao Backend
     const dadosParaEnviar = {
-        nome: newMedicine.name,
-        duracao: newMedicine.duration,
-        horarios: newMedicine.times
+      nome: newMedicine.name,
+      duracao: newMedicine.duration,
+      horarios: newMedicine.times,
+      usuarioId: usuarioId // passa o ID real do usuário
     };
 
     try {
-        // 3. Enviando para o servidor
-        const response = await fetch("http://localhost:3001/api/checkin", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dadosParaEnviar)
-        });
-        if (response.ok) {
-            // Sucesso: Atualiza a tela
-            const medToAdd = { ...newMedicine, duration: parseInt(newMedicine.duration) };
-            setMedicines([...medicines, medToAdd]);
-            setNewMedicine({ name: "", times: [""], duration: "" });
-            alert("Medicamento salvo com sucesso!"); 
-        } else {
-            // Erro: Vamos ler o motivo que o servidor mandou
-            const erroDoServidor = await response.json();
-            console.error("Erro detalhado:", erroDoServidor);
-            
-            // O alerta vai mostrar exatamente O QUE est� errado
-            alert(`O Servidor recusou: ${erroDoServidor.error || JSON.stringify(erroDoServidor)}`);
-        }
-        
+      const response = await fetch("http://localhost:3001/api/checkin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dadosParaEnviar)
+      });
+
+      if (response.ok) {
+        const medToAdd = { ...newMedicine, duration: parseInt(newMedicine.duration) };
+        setMedicines([...medicines, medToAdd]);
+        setNewMedicine({ name: "", times: [""], duration: "" });
+        alert("Medicamento salvo com sucesso!"); 
+      } else {
+        const erroDoServidor = await response.json();
+        console.error("Erro detalhado:", erroDoServidor);
+        alert(`O Servidor recusou: ${erroDoServidor.error || JSON.stringify(erroDoServidor)}`);
+      }
 
     } catch (error) {
-        console.error("Erro:", error);
-        alert("Erro de conex�o com o servidor. Verifique o terminal do VS Code.");
+      console.error("Erro:", error);
+      alert("Erro de conexão com o servidor. Verifique o terminal do VS Code.");
     }
   };
 
@@ -87,14 +80,13 @@ export default function Check({ onBack, documentAccepted, setDocumentAccepted })
 
     const med = medicines.find(m => m.name === medName);
     if (med) {
-        const allTaken = med.times.every(t => updatedTakenDoses[`${medName}-${t}`]);
-        if (allTaken) {
-            setMedicines(prevMeds =>
-                prevMeds
-                .map(m => m.name === medName ? { ...m, duration: m.duration - 1 } : m)
-                .filter(m => m.duration > 0)
-            );
-        }
+      const allTaken = med.times.every(t => updatedTakenDoses[`${medName}-${t}`]);
+      if (allTaken) {
+        setMedicines(prevMeds =>
+          prevMeds.map(m => m.name === medName ? { ...m, duration: m.duration - 1 } : m)
+                  .filter(m => m.duration > 0)
+        );
+      }
     }
   };
 
