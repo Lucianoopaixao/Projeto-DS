@@ -6,7 +6,7 @@ const router = express.Router();
 // Rota para SALVAR (POST)
 router.post("/", checkInController.criarMedicamento);
 
-// Rota para LISTAR (GET) - Para ver se salvou mesmo
-router.get("/", checkInController.listarMedicamentos);
+//Rota que retorna os medicamentos cadastrados pelo usuario
+router.get("/:usuarioId", checkInController.listarMedicamentosPorUsuario);
 
 export default router;
