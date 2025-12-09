@@ -1,5 +1,10 @@
-/* ================= Reset e CSS global ================= */
-html, body, #root {
+/* ========================================================================= */
+/* ESTILOS GLOBAIS / RESET                      */
+/* ========================================================================= */
+
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -10,15 +15,18 @@ html, body, #root {
   background-position: center;
   background-repeat: no-repeat;
   overflow-y: auto;
+  /* Fundo gradiente suave */
   background: linear-gradient(135deg, #f0f4fd 0%, #e2eafc 100%);
 }
 
-/* ================= Bloco principal ================= */
+/* ========================================================================= */
+/* BLOCO PRINCIPAL (WRAPPER)                      */
+/* ========================================================================= */
 
 .form-wrapper {
   width: 90%;
-  max-width: 840px;  /* aumentei de 720px para 840px */
-  margin: 30px auto;
+  max-width: 840px;
+  margin: 30px auto; /* Centraliza o wrapper */
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -29,25 +37,160 @@ html, body, #root {
   text-align: center;
 }
 
+/* ========================================================================= */
+/* CABEÇALHO DA PÁGINA                          */
+/* ========================================================================= */
 
-/* ================= Títulos e textos ================= */
+.page-header {
+  width: 100%;
+  background-color: #0f2b68;
+  color: white;
+  padding: 16px 0;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+/* ========================================================================= */
+/* TÍTULOS E TEXTOS                               */
+/* ========================================================================= */
+
 .form-title {
-  font-size: 1.8rem; 
+  font-size: 1.8rem;
   color: #0f2b68;
   margin-bottom: 12px;
 }
 
 p {
-  font-size: 1rem; 
+  font-size: 1rem;
   color: #0f172a;
   margin-bottom: 8px;
 }
 
-/* ================= Lista de medicamentos ================= */
+.form-body p strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #0f2b68;
+}
+
+/* ========================================================================= */
+/* FORMULÁRIO DE CADASTRO (CORRIGIDO)             */
+/* ========================================================================= */
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* Centraliza horizontalmente todos os elementos filhos (inputs e botões) */
+  align-items: center;
+  width: 100%;
+}
+
+/* Uniformiza largura e alinhamento dos campos de entrada */
+.text-input,
+select {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  /* Largura e limite consistentes para todas as abas de escrita */
+  width: 80%;
+  max-width: 400px;
+  font-size: 1rem;
+  text-align: left;
+}
+
+/* ========================================================================= */
+/* SEÇÃO DE UPLOAD DE DOCUMENTO                   */
+/* ========================================================================= */
+
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border: 2px dashed #aeb8c4;
+  border-radius: 8px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 500px;
+}
+
+.file-input {
+  width: 100%;
+  max-width: 350px;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.upload-section .btn-primary {
+  width: 100%;
+  max-width: 350px;
+}
+
+/* ========================================================================= */
+/* ESTILOS DE BOTÕES                              */
+/* ========================================================================= */
+
+.btn {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  min-width: 140px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background-color: #0f2b68;
+  color: white;
+  border: none;
+  /* Aplica largura consistente ao botão principal do formulário */
+  width: 80%;
+  max-width: 400px;
+}
+
+.btn-primary:hover {
+  background-color: #173b8b;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+.btn-secondary:hover {
+  background-color: #f1f5f9;
+}
+
+.btn-secondary:disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  border-color: #d1d5db;
+}
+
+/* Garante que o botão de adicionar horário tenha a mesma largura dos inputs */
+.form-body .btn-secondary {
+  width: 80%;
+  max-width: 400px;
+}
+
+/* ========================================================================= */
+/* LISTA DE MEDICAMENTOS                          */
+/* ========================================================================= */
+
 .medicines-list {
   display: flex;
   flex-direction: column;
-  gap: 10px; 
+  gap: 10px;
   margin: 0.8rem 0;
   padding: 12px;
   width: 100%;
@@ -74,30 +217,29 @@ p {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  padding: 12px; 
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .medicine-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px; 
+  gap: 12px;
   margin-bottom: 8px;
 }
 
 .medicine-header strong {
-  font-size: 1.3rem; 
+  font-size: 1.3rem;
   color: #0f2b68;
 }
 
 .medicine-header .duration {
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
   font-weight: 500;
   color: #0f2b68;
 }
 
-/* ================= Horários do medicamento ================= */
 .medicines-list li ul {
   list-style: none;
   padding-left: 0;
@@ -109,89 +251,18 @@ p {
   justify-content: space-between;
   align-items: center;
   padding: 3px 0;
-  font-size: 1.1rem; 
-  padding-left: 20px; 
+  font-size: 1.1rem;
+  padding-left: 20px;
 }
 
-/* ================= Formulário vertical ================= */
-.form-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; 
-}
+/* ========================================================================= */
+/* FOOTER DE AÇÕES                             */
+/* ========================================================================= */
 
-.text-input, select {
-  padding: 10px; 
-  border-radius: 6px;
-  border: 1px solid #cbd5e1;
-  width: 100%;
-  font-size: 1rem; /* fonte menor */
-  text-align: center;
-}
-
-/* Novo medicamento */
-.form-body p strong {
-  display: block;
-  margin-bottom: 6px;
-  color: #0f2b68;
-}
-
-/* Botões */
-.btn {
-  padding: 12px 20px; 
-  border-radius: 8px;
-  font-weight: 600;
-  min-width: 140px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn-primary {
-  background-color: #0f2b68;
-  color: white;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #173b8b;
-}
-
-.btn-secondary {
-  background: transparent;
-  border: 1px solid #cbd5e1;
-  color: #0f172a;
-}
-
-.btn-secondary:hover {
-  background-color: #f1f5f9;
-}
-
-.btn-secondary:disabled {
-  background-color: #e5e7eb;
-  color: #9ca3af;
-  cursor: not-allowed;
-  border-color: #d1d5db;
-}
-
-/* ================= Footer ================= */
 .actions-footer {
   display: flex;
   justify-content: center;
   gap: 12px;
   padding-top: 12px;
   margin-top: 0.8rem;
-}
-/* ================= Cabeçalho ================= */
-.page-header {
-  width: 100%;
-  background-color: #0f2b68;
-  color: white;
-  padding: 16px 0;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin-bottom: 16px;
 }

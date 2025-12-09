@@ -37,6 +37,8 @@ body,
   flex-direction: column;
   gap: 24px;
   margin: 40px auto; /* centraliza horizontalmente com margem superior */
+  /* Centraliza os itens horizontalmente se forem menores que a largura total */
+  align-items: center;
 }
 
 /* Títulos */
@@ -50,7 +52,17 @@ h1 {
 p {
   font-size: 1.2rem !important;
   color: #0f172a;
-  padding-top: 40px;
+  /* Reduzindo o padding top, que estava muito alto para um parágrafo */
+  padding-top: 10px;
+}
+
+/* 🖼️ Estilização da Imagem de Confirmação do Quiz (NOVO) */
+.quiz-confirm-img {
+  max-width: 200px; /* Tamanho adequado para uma imagem de confirmação */
+  height: auto;
+  /* Centraliza a imagem no fluxo do flex container e adiciona margem vertical */
+  margin: 15px 0 20px 0;
+  display: block;
 }
 
 /* Botões */
@@ -82,7 +94,8 @@ button:hover {
   justify-content: center;
   gap: 45px;
   flex-wrap: wrap;
-  padding-top: 50px;
+  /* Reduzindo o padding top, que estava muito alto */
+  padding-top: 20px;
 }
 
 /* Back buttons */

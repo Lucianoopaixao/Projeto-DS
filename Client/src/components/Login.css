@@ -4,11 +4,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #004aad; /* Azul do Conecta Recife / Saúde em Jogo */
+  background-color: #004aad; /* Azul do Conecta Recife / Saï¿½de em Jogo */
   padding: 20px;
 }
 
-/* O cartão branco centralizado */
 .login-box {
   background-color: white;
   padding: 2.5rem;
@@ -19,14 +18,14 @@
   text-align: center;
 }
 
-/* Título */
+/* Tï¿½tulo */
 .login-box h2 {
   color: #004aad;
   margin-bottom: 10px;
   font-size: 1.8rem;
 }
 
-/* Subtítulo */
+/* Subtï¿½tulo */
 .subtitle {
   color: #666;
   margin-bottom: 2rem;
@@ -64,7 +63,7 @@
   box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1);
 }
 
-/* Botão de Entrar */
+/* Botï¿½o de Entrar */
 .btn-login {
   width: 100%;
   padding: 14px;
