@@ -3,7 +3,6 @@ import { jest } from "@jest/globals";
 
 /**
  * MOCK DO CONTROLLER
- * (export nomeado: login)
  */
 await jest.unstable_mockModule("../controllers/loginController.js", () => ({
   login: (req, res) => {
@@ -11,12 +10,14 @@ await jest.unstable_mockModule("../controllers/loginController.js", () => ({
   }
 }));
 
-const app = (await import("../app.js")).default;
+// CORREÇÃO: Importa do index.js
+const app = (await import("../index.js")).default;
 
 describe("Login Routes (Black Box)", () => {
-  test("POST /api/login retorna 401", async () => {
+  test("POST /login retorna 401", async () => {
+    // CORREÇÃO: Rota simplificada (/login) para bater com o index.js
     const response = await request(app)
-      .post("/api/login")
+      .post("/login")
       .send({
         username: "teste",
         password: "errada"

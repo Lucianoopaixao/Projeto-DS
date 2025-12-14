@@ -3,7 +3,6 @@ import request from "supertest";
 
 /**
  * MOCK DO MODEL DO QUIZ
- * (impede acesso ao Prisma)
  */
 await jest.unstable_mockModule("../models/quizModel.js", () => ({
   __esModule: true,
@@ -13,8 +12,8 @@ await jest.unstable_mockModule("../models/quizModel.js", () => ({
   retornarquestoes: jest.fn().mockResolvedValue([])
 }));
 
-// importa o app APÓS o mock
-const app = (await import("../app.js")).default;
+// CORREÇÃO: Importa do index.js
+const app = (await import("../index.js")).default;
 
 describe("Quiz API (Black Box)", () => {
   test("GET /api/quiz retorna 200", async () => {
