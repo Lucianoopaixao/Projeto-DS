@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import app from "./app.js";
 
 //IMPORTANDO ROTAS
 import quizRoutes from "./routes/quizRoutes.js";
@@ -21,18 +22,16 @@ app.use("/login", loginRoutes);
 
 const PORT = 3001;
 
-//LIGANDO O SERVIDOR
 const server = app.listen(PORT, () => {
   console.log(`Servidor RODANDO ${PORT}`);
-  console.log(`Aguardando...`);
 });
 
-// Proteção para não fechar sozinho se der erro na porta
 server.on("error", (e) => {
   if (e.code === "EADDRINUSE") {
-    console.error(`ERRO: A porta ${PORT} ja esta sendo usada.`);
-    console.error(`Digite 'npx kill-port ${PORT}' e tente de novo.`);
+    console.error(`Porta ${PORT} em uso`);
   } else {
     console.error("Erro no servidor:", e);
   }
 });
+
+export default app;
