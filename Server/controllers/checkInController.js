@@ -1,4 +1,5 @@
 import checkInModel from "../models/checkInModel.js";
+import prisma from "../prisma.js";
 
 function stringParaData(horarioString) {
   try {
@@ -40,6 +41,16 @@ async function criarMedicamento(req, res) {
     };
 
     const novoCheckIn = await checkInModel.criarCheckIn(dadosParaSalvar);
+
+    await prisma.user.update({
+      where: { id: parseInt(usuario_id) },
+      data: {
+        moedas: {
+          increment: 5,
+        },
+      },
+    });
+    
     return res.status(201).json(novoCheckIn);
   } catch (error) {
     console.error("Erro ao salvar:", error);

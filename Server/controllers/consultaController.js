@@ -1,4 +1,5 @@
 import consultaModel from "../models/consultaModel.js";
+import prisma from "../prisma.js";
 // Não precisamos importar 'fs' ou 'path' porque não vamos salvar o arquivo.
 
 async function cadastrar(req, res) {
@@ -28,6 +29,15 @@ async function cadastrar(req, res) {
         // --- 2. Chamada ao Model ---
         // O Model envia os dados limpos (com o placeholder) para o banco.
         const nova = await consultaModel.registrarConsulta(dadosParaModel);
+
+        await prisma.user.update({
+      where: { id: usuario_id },
+      data: {
+        moedas: {
+          increment: 10,
+        },
+      },
+    });
         
         // Sucesso! Retorna 201 para o Front-End (acionando a tela de 'Aprovado').
         res.status(201).json(nova); 
