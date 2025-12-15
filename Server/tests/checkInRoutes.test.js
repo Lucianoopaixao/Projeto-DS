@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../app.js";
+import app from "../index.js";
 
 describe("CheckIn API (Black Box)", () => {
   test("POST /api/checkin retorna 400 se vazio", async () => {

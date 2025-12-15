@@ -1,37 +1,44 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import app from "./app.js";
 
-//IMPORTANDO ROTAS
+// importando rotas
 import quizRoutes from "./routes/quizRoutes.js";
 import consultaRoutes from "./routes/consultaRoutes.js";
 import checkInRoutes from "./routes/checkInRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
 
+// criacao do app
 const app = express();
+
+// configuracoes
 app.use(cors());
-app.use(express.json({ limit: "50mb" }));
+app.use(express.json({ limit: "50mb" })); // Aumentado limite para evitar erros com imagens grandes
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-//DEFININDO AS ROTAS
+// definindo as rotas
 app.use("/api/quiz", quizRoutes);
 app.use("/api/consultas", consultaRoutes);
 app.use("/api/checkin", checkInRoutes);
 app.use("/login", loginRoutes);
 
-const PORT = 3001;
+// iniciando server
+const PORT = process.env.PORT || 3001;
 
-const server = app.listen(PORT, () => {
-  console.log(`Servidor RODANDO ${PORT}`);
-});
+// inicinando sem ser pra testes
+if (process.env.NODE_ENV !== "test") {
+  const server = app.listen(PORT, () => {
+    console.log(`Servidor RODANDO na porta ${PORT}`);
+  });
 
-server.on("error", (e) => {
-  if (e.code === "EADDRINUSE") {
-    console.error(`Porta ${PORT} em uso`);
-  } else {
-    console.error("Erro no servidor:", e);
-  }
-});
+  server.on("error", (e) => {
+    if (e.code === "EADDRINUSE") {
+      console.error(`Porta ${PORT} j� est� em uso!`);
+    } else {
+      console.error("Erro no servidor:", e);
+    }
+  });
+}
 
+// exporta app pra testes
 export default app;

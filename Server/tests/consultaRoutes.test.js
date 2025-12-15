@@ -10,11 +10,13 @@ await jest.unstable_mockModule("../models/consultaModel.js", () => ({
   }
 }));
 
-const app = (await import("../app.js")).default;
+// CORREÇÃO: Importa do index.js
+const app = (await import("../index.js")).default;
 
 describe("Consulta API (Black Box)", () => {
-  test("GET /api/consulta retorna 200", async () => {
-    const res = await request(app).get("/api/consulta");
+  test("GET /api/consultas retorna 200", async () => {
+    // CORREÇÃO: Rota no plural (/consultas) para bater com o index.js
+    const res = await request(app).get("/api/consultas");
 
     expect(res.statusCode).toBe(200);
   });
