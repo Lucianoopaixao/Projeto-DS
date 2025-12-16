@@ -1,5 +1,5 @@
 import consultaModel from "../models/consultaModel.js";
-import prisma from "../prisma.js";
+import prisma from "../lib/prisma.js"
 // Não precisamos importar 'fs' ou 'path' porque não vamos salvar o arquivo.
 
 async function cadastrar(req, res) {

@@ -1,5 +1,5 @@
 import checkInModel from "../models/checkInModel.js";
-import prisma from "../prisma.js";
+import prisma from "../lib/prisma.js"
 
 function stringParaData(horarioString) {
   try {
@@ -10,7 +10,7 @@ function stringParaData(horarioString) {
     data.setSeconds(0);
     return data;
   } catch (error) {
-    console.log("Erro na convers�o, usando data atual:", error);
+    console.log("Erro na conversao, usando data atual:", error);
     return new Date();
   }
 }
