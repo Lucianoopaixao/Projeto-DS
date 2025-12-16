@@ -11,7 +11,7 @@ const clientId = "app-recife"; // cliente fixo app recife
 export const login = async (req, res) => {
   const { username, password } = req.body; // pegando os dados do front
 
-  // Mascarar senha para n�o aparecer no log
+  // Mascarar senha para nao aparecer no log
   const maskedPassword = password ? password.replace(/./g, "*") : "";
 
   console.log(
@@ -45,7 +45,7 @@ export const login = async (req, res) => {
       return res.status(500).json({ message: "Token n�o retornado" });
     }
 
-    // Obtendo as informacoes do usu�rio
+    // Obtendo as informacoes do usuario
     const selfResponse = await axios.get(`${API_URL}/api/self`, {
       headers: { Authorization: `Bearer ${externalToken}` },
     });
@@ -58,12 +58,12 @@ export const login = async (req, res) => {
 
     if (!externalId) {
       console.error(
-        "ERRO: Nenhum identificador �nico encontrado no self:",
+        "ERRO: Nenhum identificador unico encontrado no self:",
         self
       );
       return res
         .status(500)
-        .json({ message: "N�o foi poss�vel identificar o usu�rio" });
+        .json({ message: "Nao foi possivel identificar o usuario" });
     }
 
     // Salva ou atualiza no banco local (Prisma)
@@ -85,12 +85,10 @@ export const login = async (req, res) => {
       message: "Login bem-sucedido",
     });
   } catch (error) {
-    // AQUI EST� O C�DIGO NOVO PARA DESCOBRIR O ERRO
-
     console.log("ERRO DETALHADO DA API EXTERNA:");
 
     if (error.response) {
-      // O servidor externo respondeu "N�o" (ex: senha errada)
+      // O servidor externo respondeu "Nao" (ex: senha errada)
       console.log("Status:", error.response.status);
       console.log("Motivo:", error.response.data);
     } else {
@@ -103,7 +101,7 @@ export const login = async (req, res) => {
       error.response?.data?.error_description ||
       error.response?.data?.detail ||
       error.message ||
-      "Falha na realiza��o do login";
+      "Falha na realizacao do login";
 
     return res.status(status).json({ message: errorMessage });
   }
