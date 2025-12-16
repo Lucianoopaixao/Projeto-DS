@@ -1,7 +1,5 @@
 import quizModel from "../models/quizModel.js";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../lib/prisma.js"
 
 //receber requisição e puxar do model
 async function pegarperguntas(req, res) {
@@ -33,6 +31,10 @@ async function responderQuiz(req, res) {
     }
 
     const acertou = resposta === questao.resposta;
+
+    console.log("Resposta enviada:", resposta);
+    console.log("Resposta correta:", questao.resposta);
+    console.log("Acertou?", resposta === questao.resposta);
 
     if (acertou) {
       await prisma.user.update({
