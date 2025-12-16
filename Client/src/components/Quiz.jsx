@@ -3,6 +3,8 @@ import Question from "./Question";
 import "./Quiz.css";
 
 export default function Quiz({ voltarInicio }) {
+  //usuario logado
+  const usuarioId = localStorage.getItem("usuario_id");
   //states (atualizar tela)
   const [questions, setQuestions] = useState([]);
   const [indice, setIndice] = useState(0);
@@ -21,6 +23,7 @@ export default function Quiz({ voltarInicio }) {
 
         //transformando as questos  o formato
         const adaptadas = lista.map((q) => ({
+          id: q.id,
           pergunta: q.pergunta,
           alternativas: [
             q.alternativa_a,
@@ -43,14 +46,35 @@ export default function Quiz({ voltarInicio }) {
   }, []);
 
   //pegarreposta, qd o usuario escolhe uma resposta, checando se acertou e mostrando explicação
-  const pegarReposta = (alternativa) => {
-    if (alternativa === questions[indice].resposta) {
-      setPontuacao((p) => p + 1);
-      setAcertou(true);
-    } else {
-      setAcertou(false);
+  const pegarReposta = async (alternativa) => {
+    const questaoAtual = questions[indice];
+
+    try {
+      const res = await fetch("http://localhost:3001/api/quiz/responder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          usuario_id: Number(usuarioId),
+          questao_id: questaoAtual.id,
+          resposta: alternativa,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.acertou) {
+        setPontuacao((p) => p + data.moedas_ganhas);
+        setAcertou(true);
+      } else {
+        setAcertou(false);
+      }
+
+      setMostrarExplicacao(true);
+    } catch (error) {
+      console.error("Erro ao responder quiz:", error);
     }
-    setMostrarExplicacao(true);
   };
 
   //pasando pra prox pergunta
@@ -91,7 +115,6 @@ export default function Quiz({ voltarInicio }) {
             <span className="stat-label">Erradas</span>
             <span className="stat-valor">{questions.length - pontuacao}</span>
           </div>
-
         </div>
 
         <button className="btn-fim-quiz" onClick={voltarInicio}>

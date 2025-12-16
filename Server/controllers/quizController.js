@@ -1,5 +1,5 @@
 import quizModel from "../models/quizModel.js";
-import prisma from "../lib/prisma.js"
+import prisma from "../lib/prisma.js";
 
 //receber requisição e puxar do model
 async function pegarperguntas(req, res) {
@@ -30,7 +30,8 @@ async function responderQuiz(req, res) {
       return res.status(404).json({ erro: "Questão não encontrada" });
     }
 
-    const acertou = resposta === questao.resposta;
+    const acertou =
+      resposta.trim().toLowerCase() === questao.resposta.trim().toLowerCase();
 
     console.log("Resposta enviada:", resposta);
     console.log("Resposta correta:", questao.resposta);
@@ -40,16 +41,15 @@ async function responderQuiz(req, res) {
       await prisma.user.update({
         where: { id: Number(usuario_id) },
         data: {
-          moedas: { increment: 1 }
-        }
+          moedas: { increment: 1 },
+        },
       });
     }
 
     return res.status(200).json({
       acertou,
-      moedas_ganhas: acertou ? 1 : 0
+      moedas_ganhas: acertou ? 1 : 0,
     });
-
   } catch (error) {
     console.error("Erro ao responder quiz", error);
     return res.status(500).json({ erro: "Erro interno" });
@@ -58,5 +58,5 @@ async function responderQuiz(req, res) {
 
 export default {
   pegarperguntas,
-  responderQuiz
+  responderQuiz,
 };
