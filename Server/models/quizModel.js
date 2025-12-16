@@ -16,6 +16,13 @@ async function retornarquestoes() {
   }
 }
 
+async function buscarQuestaoPorId(id) {
+  return prisma.questoes.findUnique({
+    where: { id: Number(id) }
+  });
+}
+
 export default {
   retornarquestoes,
+  buscarQuestaoPorId
 };
