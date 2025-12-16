@@ -4,7 +4,21 @@ import "./Quiz.css";
 
 export default function Quiz({ voltarInicio }) {
   //usuario logado
-  const usuarioId = localStorage.getItem("usuario_id");
+  let usuarioId = null;
+  const userString = localStorage.getItem("user");
+
+  if (userString) {
+    try {
+      const userObj = JSON.parse(userString); // convertendo pra string
+      usuarioId = userObj.id; // acessando o id
+    } catch (e) {
+      console.error("Erro ao fazer parse do objeto user no localStorage:", e);
+      //se da erro nem enfvia
+    }
+  }
+
+  //se for string vira numero
+  const usuarioIdNumero = Number(usuarioId);
   //states (atualizar tela)
   const [questions, setQuestions] = useState([]);
   const [indice, setIndice] = useState(0);
@@ -48,6 +62,12 @@ export default function Quiz({ voltarInicio }) {
   //pegarreposta, qd o usuario escolhe uma resposta, checando se acertou e mostrando explicação
   const pegarReposta = async (alternativa) => {
     const questaoAtual = questions[indice];
+    //validcacao de usuario
+    if (!usuarioIdNumero || usuarioIdNumero <= 0) {
+      console.error("Usuário não logado, ID inválido ou falha na leitura.");
+      alert("Sua sessão expirou ou o login é necessário para responder.");
+      return;
+    }
 
     try {
       const res = await fetch("http://localhost:3001/api/quiz/responder", {
@@ -56,7 +76,7 @@ export default function Quiz({ voltarInicio }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          usuario_id: Number(usuarioId),
+          usuario_id: usuarioIdNumero,
           questao_id: questaoAtual.id,
           resposta: alternativa,
         }),

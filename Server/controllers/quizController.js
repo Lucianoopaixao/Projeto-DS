@@ -18,7 +18,17 @@ async function pegarperguntas(req, res) {
 //receber a resposta do usuario e validar para adicionar moedas
 async function responderQuiz(req, res) {
   try {
+    //log pra ver oq ta indo de vdd
+    console.log("--- DEBUG REQ.BODY ---");
+    console.log(req.body);
+    console.log("----------------------");
+
     const { usuario_id, questao_id, resposta } = req.body;
+
+    //vendo mais especifico ainda
+    if (!usuario_id) console.log("ERRO: usuario_id está faltando!");
+    if (!questao_id) console.log("ERRO: questao_id está faltando!");
+    if (!resposta) console.log("ERRO: resposta está faltando!");
 
     if (!usuario_id || !questao_id || !resposta) {
       return res.status(400).json({ erro: "Dados incompletos" });
