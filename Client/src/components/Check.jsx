@@ -41,18 +41,14 @@ export default function Check({
       }
     }
 
-    // --- NOVA FUNÇÃO: Busca o Saldo Real ---
     async function fetchSaldo() {
       try {
         const response = await fetch(`http://localhost:3001/api/usuarios/${user.id}/saldo`);
         
         if (response.ok) {
           const data = await response.json();
-          // Atualiza o estado visual com o valor do banco
           setCoins(data.moedas);
           
-          // --- A LINHA MÁGICA AQUI (1) ---
-          // Avisa o Header que o saldo foi carregado/atualizado
           window.dispatchEvent(new Event("balanceUpdated")); 
         }
       } catch (error) {
@@ -149,11 +145,8 @@ export default function Check({
     const updatedTakenDoses = { ...takenDoses, [key]: true };
     setTakenDoses(updatedTakenDoses);
     
-    // Atualiza moeda localmente
     setCoins(coins + 1);
     
-    // --- A LINHA MÁGICA AQUI (2) ---
-    // Avisa o Header para atualizar as moedas lá em cima também
     window.dispatchEvent(new Event("balanceUpdated"));
 
     alert(`Dose de ${medName} (${time}) confirmada! +1 moeda`);

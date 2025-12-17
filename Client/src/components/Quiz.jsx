@@ -62,7 +62,6 @@ export default function Quiz({ voltarInicio }) {
       });
   }, []);
 
-  // --- NOVA LÓGICA: Quando o jogo acaba, busca o saldo total ---
   useEffect(() => {
     if (fim && usuarioIdNumero) {
       async function atualizarSaldo() {
@@ -80,8 +79,6 @@ export default function Quiz({ voltarInicio }) {
               localStorage.setItem("user", JSON.stringify(userLocal));
             }
 
-            // --- A LINHA MÁGICA AQUI (1) ---
-            // Garante que o Header atualize assim que o jogo terminar
             window.dispatchEvent(new Event("balanceUpdated"));
           }
         } catch (error) {
@@ -122,8 +119,6 @@ export default function Quiz({ voltarInicio }) {
         setPontuacao((p) => p + data.moedas_ganhas);
         setAcertou(true);
 
-        // --- A LINHA MÁGICA AQUI (2) ---
-        // Atualiza o Header imediatamente quando você acerta!
         window.dispatchEvent(new Event("balanceUpdated"));
       } else {
         setAcertou(false);
@@ -166,7 +161,6 @@ export default function Quiz({ voltarInicio }) {
           <span className="exibir-moedas" style={{color: '#4CAF50'}}> +{pontuacao} 🪙</span>
         </div>
 
-        {/* --- MOSTRA O SALDO TOTAL DA CARTEIRA --- */}
         <div className="destaque-pontuacao" style={{marginTop: '20px', borderTop: '1px solid #ccc', paddingTop: '20px'}}>
             <p>Seu Saldo Total:</p>
             <span className="exibir-moedas"> {saldoTotal !== null ? saldoTotal : "..."} 🪙</span>
