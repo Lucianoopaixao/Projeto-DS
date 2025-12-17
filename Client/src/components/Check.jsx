@@ -150,7 +150,7 @@ export default function Check({
             
             window.dispatchEvent(new Event("balanceUpdated"));
             
-            alert(`Dose de ${medName} (${time}) confirmada! +1 moeda`);
+            alert(`Dose de ${medName} (${time}) confirmada! +5 moedas`);
         } catch (error) {
             console.error("Erro ao salvar moedas", error);
         }
