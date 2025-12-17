@@ -1,0 +1,31 @@
+.carteira-container {
+  position: fixed;     /* Fixa na tela mesmo ao rolar */
+  bottom: 20px;        /* Distância do fundo */
+  right: 20px;         /* Distância da direita */
+  z-index: 1000;       /* Garante que fique acima de tudo */
+  
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.carteira-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.carteira-label {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.carteira-value {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}

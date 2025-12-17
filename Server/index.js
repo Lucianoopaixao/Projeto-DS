@@ -7,6 +7,7 @@ import quizRoutes from "./routes/quizRoutes.js";
 import consultaRoutes from "./routes/consultaRoutes.js";
 import checkInRoutes from "./routes/checkInRoutes.js";
 import loginRoutes from "./routes/loginRoutes.js";
+import usuarioRoutes from "./routes/usuarioRoutes.js";
 
 // criacao do app
 const app = express();
@@ -21,6 +22,7 @@ app.use("/api/quiz", quizRoutes);
 app.use("/api/consultas", consultaRoutes);
 app.use("/api/checkin", checkInRoutes);
 app.use("/login", loginRoutes);
+app.use("/api/usuarios", usuarioRoutes);
 
 // iniciando server
 const PORT = process.env.PORT || 3001;

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import "./Check.css";
 
 export default function Check({
@@ -22,36 +21,47 @@ export default function Check({
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
 
+    // Função de buscar remédios (mantive igual)
     async function fetchMedicines() {
       try {
-        const response = await fetch(
-          `http://localhost:3001/api/checkin/${user.id}`
-        );
-        if (!response.ok) {
-          console.error("Erro ao buscar medicamentos no servidor.");
-          return;
+        const response = await fetch(`http://localhost:3001/api/checkin/${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          const formatted = data.map((med) => ({
+             name: med.nome_medicamento,
+             duration: med.duracao_semanas,
+             times: med.horarios.map((h) =>
+               new Date(h.horario).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+             ),
+          }));
+          setMedicines(formatted);
         }
-
-        const data = await response.json();
-
-        const formatted = data.map((med) => ({
-          name: med.nome_medicamento,
-          duration: med.duracao_semanas,
-          times: med.horarios.map((h) =>
-            new Date(h.horario).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          ),
-        }));
-
-        setMedicines(formatted);
       } catch (error) {
         console.error("Erro ao buscar medicamentos:", error);
       }
     }
 
+    // --- NOVA FUNÇÃO: Busca o Saldo Real ---
+    async function fetchSaldo() {
+      try {
+        const response = await fetch(`http://localhost:3001/api/usuarios/${user.id}/saldo`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          // Atualiza o estado visual com o valor do banco
+          setCoins(data.moedas);
+          
+          // --- A LINHA MÁGICA AQUI (1) ---
+          // Avisa o Header que o saldo foi carregado/atualizado
+          window.dispatchEvent(new Event("balanceUpdated")); 
+        }
+      } catch (error) {
+        console.error("Erro ao buscar saldo:", error);
+      }
+    }
+
     fetchMedicines();
+    fetchSaldo(); 
   }, []);
 
   const handleFileChange = (e) => {
@@ -95,7 +105,6 @@ export default function Check({
       return;
     }
 
-    // 2. Preparar dados para enviar ao Backend
     const dadosParaEnviar = {
       usuario_id: user.id,
       nome: newMedicine.name,
@@ -104,14 +113,12 @@ export default function Check({
     };
 
     try {
-      // 3. Enviando para o servidor
       const response = await fetch("http://localhost:3001/api/checkin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosParaEnviar),
       });
       if (response.ok) {
-        // Sucesso: Atualiza a tela
         const medToAdd = {
           ...newMedicine,
           duration: parseInt(newMedicine.duration),
@@ -120,11 +127,9 @@ export default function Check({
         setNewMedicine({ name: "", times: [""], duration: "" });
         alert("Medicamento salvo com sucesso!");
       } else {
-        // Erro: Vamos ler o motivo que o servidor mandou
         const erroDoServidor = await response.json();
         console.error("Erro detalhado:", erroDoServidor);
 
-        // O alerta vai mostrar exatamente O QUE est� errado
         alert(
           `O Servidor recusou: ${
             erroDoServidor.error || JSON.stringify(erroDoServidor)
@@ -133,7 +138,7 @@ export default function Check({
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro de conex�o com o servidor. Verifique o terminal do VS Code.");
+      alert("Erro de conexão com o servidor. Verifique o terminal do VS Code.");
     }
   };
 
@@ -143,7 +148,14 @@ export default function Check({
 
     const updatedTakenDoses = { ...takenDoses, [key]: true };
     setTakenDoses(updatedTakenDoses);
+    
+    // Atualiza moeda localmente
     setCoins(coins + 1);
+    
+    // --- A LINHA MÁGICA AQUI (2) ---
+    // Avisa o Header para atualizar as moedas lá em cima também
+    window.dispatchEvent(new Event("balanceUpdated"));
+
     alert(`Dose de ${medName} (${time}) confirmada! +1 moeda`);
 
     const med = medicines.find((m) => m.name === medName);

@@ -53,6 +53,7 @@ export default function RegisterAppointment({ onBack }) {
     };
 
     try {
+      // 1. Envia a consulta para o servidor
       const response = await fetch(
         "http://localhost:3001/api/consultas/registrar-consulta",
         {
@@ -65,14 +66,38 @@ export default function RegisterAppointment({ onBack }) {
       if (response.ok) {
         // Em caso de sucesso
         const MOEDAS_GANHAS = 10;
+        let novoSaldoTotal = 0;
 
-        const saldoAtual = user.saldo || 0;
-        const novoSaldoTotal = saldoAtual + MOEDAS_GANHAS;
+        // --- ALTERAÇÃO: Buscando o saldo real do banco ---
+        try {
+          const responseSaldo = await fetch(
+            `http://localhost:3001/api/usuarios/${user.id}/saldo`
+          );
+          
+          if (responseSaldo.ok) {
+            const dataSaldo = await responseSaldo.json();
+            novoSaldoTotal = dataSaldo.moedas;
 
-        user.saldo = novoSaldoTotal;
-        localStorage.setItem("user", JSON.stringify(user));
+            // Atualizamos o localStorage para o resto do site ficar sincronizado
+            user.saldo = novoSaldoTotal; // ou user.moedas, dependendo de como você salva
+            localStorage.setItem("user", JSON.stringify(user));
 
-        // tela de sucesso com os dados calculados
+            // --- A LINHA MÁGICA AQUI ---
+            // Assim que salvamos o novo saldo, avisamos o Header
+            window.dispatchEvent(new Event("balanceUpdated"));
+
+          } else {
+            // Fallback: Se a rota de saldo falhar, usamos o cálculo local provisoriamente
+            console.warn("Não foi possível buscar o saldo atualizado. Usando cálculo local.");
+            novoSaldoTotal = (user.saldo || 0) + MOEDAS_GANHAS;
+          }
+        } catch (erroSaldo) {
+          console.error("Erro ao conectar na rota de saldo:", erroSaldo);
+          novoSaldoTotal = (user.saldo || 0) + MOEDAS_GANHAS;
+        }
+        // --- FIM DA ALTERAÇÃO ---
+
+        // Exibe a tela de sucesso com o dado que veio do Banco
         setSuccessData({
           ganho: MOEDAS_GANHAS,
           total: novoSaldoTotal,

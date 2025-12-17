@@ -6,31 +6,31 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+
+// Importações dos seus componentes
 import Login from "./components/Login";
 import Quiz from "./components/Quiz";
 import FollowTreatment from "./components/FollowTreatment";
 import RegisterAppointment from "./components/RegisterAppointment";
 import Check from "./components/Check";
 import Inicio from "./components/Inicio";
+import Carteira from "./components/Carteira"; 
 
 import QuizConfirmImage from "./assets/quiz.svg";
-
 
 const RotaProtegida = ({ children }) => {
   const token = localStorage.getItem("token");
 
   // Se não tiver token, chuta o usuário para a tela de Login ("/")
   if (!token) {
-    // Corrigindo caracteres especiais (era 'no')
     return <Navigate to="/" replace />;
   }
 
-  // Se tiver token, renderiza o conteúdo (a Home)
+  // Se tiver token, renderiza o conteúdo (Home + Carteira)
   return children;
 };
 
 function SistemaDoJogo() {
-  // Corrigindo caracteres especiais
   const [tela, setTela] = useState("Introdução");
   const [documentAccepted, setDocumentAccepted] = useState(false);
 
@@ -45,6 +45,8 @@ function SistemaDoJogo() {
   );
 
   if (tela === "Introdução") {
+    // DICA: Se não quiser a carteira na tela de "Clique para começar", 
+    // teríamos que mudar a lógica, mas aqui ela aparecerá conforme pedido.
     return <div className="intro" onClick={() => setTela("Início")}></div>;
   }
 
@@ -57,14 +59,13 @@ function SistemaDoJogo() {
     );
   }
 
-  // TELA DE CONFIRMAÇÃO DO QUIZ (AJUSTADA PARA INCLUIR IMAGEM)
+  // TELA DE CONFIRMAÇÃO DO QUIZ
   if (tela === "confirmar-quiz") {
     return renderWrapper(
       <>
         <h1>Quiz sobre ISTs</h1>
         <p>Você está prestes a iniciar o Quiz sobre ISTs. Deseja continuar?</p>
 
-        {/* INSERÇÃO DA IMAGEM */}
         <img
           src={QuizConfirmImage}
           alt="Ilustração de confirmação do Quiz"
@@ -73,7 +74,6 @@ function SistemaDoJogo() {
 
         <div className="button-row">
           <button onClick={() => setTela("quiz")}>Iniciar</button>
-          {/* Corrigindo caracteres especiais */}
           <button onClick={() => setTela("Início")}>Voltar</button>
         </div>
       </>
@@ -81,25 +81,26 @@ function SistemaDoJogo() {
   }
 
   if (tela === "quiz") {
-    // Corrigindo caracteres especiais
     return <Quiz voltarInicio={() => setTela("Início")} />;
   }
-  //acompanhar tratamento
+  
+  // Acompanhar tratamento
   if (tela === "acompanhar") {
     return (
       <FollowTreatment
-        // Corrigindo caracteres especiais
         onBack={() => setTela("Início")}
         onFirstAction={() => setTela("registrar-consulta")}
         onSecondAction={() => setTela("check")}
       />
     );
   }
-  //registrar consulta
+  
+  // Registrar consulta
   if (tela === "registrar-consulta") {
     return <RegisterAppointment onBack={() => setTela("acompanhar")} />;
   }
-  //parte do check-in
+  
+  // Parte do check-in
   if (tela === "check") {
     return (
       <Check
@@ -113,23 +114,27 @@ function SistemaDoJogo() {
   return null;
 }
 
-//tela de login
+// --- APP PRINCIPAL EDITADO ---
 export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Rota Pública: Login */}
+        {/* Rota Pública: Login (Sem Carteira) */}
         <Route path="/" element={<Login />} />
 
-        {/* Rota Pública: Cadastro (se existir) */}
+        {/* Rota Pública: Cadastro */}
         <Route path="/cadastro" element={<div>Cadastro</div>} />
 
-        {/* Rota PROTEGIDA: Home */}
+        {/* Rota PROTEGIDA: Home (Com Carteira) */}
         <Route
           path="/home"
           element={
             <RotaProtegida>
-              <SistemaDoJogo />
+              {/* Usamos o Fragment (<>...</>) para agrupar o Jogo e a Carteira */}
+              <>
+                <SistemaDoJogo />
+                <Carteira /> {/* <-- ADICIONADO AQUI */}
+              </>
             </RotaProtegida>
           }
         />

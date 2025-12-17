@@ -13,20 +13,23 @@ export default function Quiz({ voltarInicio }) {
       usuarioId = userObj.id; // acessando o id
     } catch (e) {
       console.error("Erro ao fazer parse do objeto user no localStorage:", e);
-      //se da erro nem enfvia
     }
   }
 
   //se for string vira numero
   const usuarioIdNumero = Number(usuarioId);
+
   //states (atualizar tela)
   const [questions, setQuestions] = useState([]);
   const [indice, setIndice] = useState(0);
-  const [pontuacao, setPontuacao] = useState(0);
+  const [pontuacao, setPontuacao] = useState(0); // Pontos ganhos SÓ NESTA rodada
   const [fim, setFim] = useState(false);
   const [mostrarExplicacao, setMostrarExplicacao] = useState(false);
   const [acertou, setAcertou] = useState(false);
   const [carregando, setCarregando] = useState(true);
+  
+  // NOVO STATE: Para guardar o saldo total que vem do banco
+  const [saldoTotal, setSaldoTotal] = useState(null);
 
   //pegando do back
   useEffect(() => {
@@ -59,6 +62,37 @@ export default function Quiz({ voltarInicio }) {
       });
   }, []);
 
+  // --- NOVA LÓGICA: Quando o jogo acaba, busca o saldo total ---
+  useEffect(() => {
+    if (fim && usuarioIdNumero) {
+      async function atualizarSaldo() {
+        try {
+          // Chama a rota que criamos para pegar o saldo real
+          const res = await fetch(`http://localhost:3001/api/usuarios/${usuarioIdNumero}/saldo`);
+          if (res.ok) {
+            const data = await res.json();
+            setSaldoTotal(data.moedas);
+
+            // Atualiza o localStorage para garantir sincronia
+            const userLocal = JSON.parse(localStorage.getItem("user"));
+            if (userLocal) {
+              userLocal.saldo = data.moedas; // ou userLocal.moedas
+              localStorage.setItem("user", JSON.stringify(userLocal));
+            }
+
+            // --- A LINHA MÁGICA AQUI (1) ---
+            // Garante que o Header atualize assim que o jogo terminar
+            window.dispatchEvent(new Event("balanceUpdated"));
+          }
+        } catch (error) {
+          console.error("Erro ao buscar saldo final:", error);
+        }
+      }
+      atualizarSaldo();
+    }
+  }, [fim, usuarioIdNumero]);
+  // -------------------------------------------------------------
+
   //pegarreposta, qd o usuario escolhe uma resposta, checando se acertou e mostrando explicação
   const pegarReposta = async (alternativa) => {
     const questaoAtual = questions[indice];
@@ -87,6 +121,10 @@ export default function Quiz({ voltarInicio }) {
       if (data.acertou) {
         setPontuacao((p) => p + data.moedas_ganhas);
         setAcertou(true);
+
+        // --- A LINHA MÁGICA AQUI (2) ---
+        // Atualiza o Header imediatamente quando você acerta!
+        window.dispatchEvent(new Event("balanceUpdated"));
       } else {
         setAcertou(false);
       }
@@ -121,15 +159,24 @@ export default function Quiz({ voltarInicio }) {
     return (
       <div className="quiz-inner-wrapper container-resultado">
         <h1>Fim do Quiz!</h1>
+        
+        {/* Mostra quanto ganhou na partida */}
         <div className="destaque-pontuacao">
-          <p>Suas moedas</p>
-          <span className="exibir-moedas"> {pontuacao} 🪙</span>
+          <p>Você ganhou nesta rodada:</p>
+          <span className="exibir-moedas" style={{color: '#4CAF50'}}> +{pontuacao} 🪙</span>
+        </div>
+
+        {/* --- MOSTRA O SALDO TOTAL DA CARTEIRA --- */}
+        <div className="destaque-pontuacao" style={{marginTop: '20px', borderTop: '1px solid #ccc', paddingTop: '20px'}}>
+            <p>Seu Saldo Total:</p>
+            <span className="exibir-moedas"> {saldoTotal !== null ? saldoTotal : "..."} 🪙</span>
         </div>
 
         <div className="acertos-erros">
           <div className="stat-box correto">
             <span className="stat-label">Corretas</span>
-            <span className="stat-valor">{pontuacao}</span>
+            <span className="stat-valor">{pontuacao}</span> 
+            {/* Assumindo que 1 ponto = 1 acerto */}
           </div>
           <div className="stat-box errado">
             <span className="stat-label">Erradas</span>
@@ -148,7 +195,8 @@ export default function Quiz({ voltarInicio }) {
     //mostrando as moedas
     <div className="quiz-inner-wrapper">
       <h1>Quiz sobre ISTs</h1>
-      <div>Moedas : {pontuacao} 🪙</div>
+      {/* Aqui mostra o score da partida atual */}
+      <div>Pontos da rodada : {pontuacao} 🪙</div>
 
       {!mostrarExplicacao ? ( // se mostrar explicacao tiver falso, mostra pergunta
         //se tiver verdadeiro, vai pra tela da explicação
