@@ -72,8 +72,33 @@ async function listarMedicamentosPorUsuario(req, res) {
   }
 }
 
+async function tomarDose(req, res) {
+  try {
+    const { usuario_id } = req.body;
+
+    if (!usuario_id) {
+      return res.status(400).json({ error: "Usuário inválido" });
+    }
+
+    await prisma.user.update({
+      where: { id: Number(usuario_id) },
+      data: {
+        moedas: {
+          increment: 1,
+        },
+      },
+    });
+
+    return res.status(200).json({ message: "Dose registrada (+1 moeda)" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao registrar dose" });
+  }
+}
+
 export default {
   criarMedicamento,
   listarMedicamentos: listarMedicamentosPorUsuario,
   listarMedicamentosPorUsuario,
+  tomarDose,
 };

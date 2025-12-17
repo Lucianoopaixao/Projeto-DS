@@ -9,4 +9,7 @@ router.post("/", checkInController.criarMedicamento);
 //Rota que retorna os medicamentos cadastrados pelo usuario
 router.get("/:usuarioId", checkInController.listarMedicamentosPorUsuario);
 
+router.post("/tomar", checkInController.tomarDose);
+
+
 export default router;

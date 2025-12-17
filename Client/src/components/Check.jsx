@@ -104,6 +104,9 @@ export default function Check({
         };
         setMedicines([...medicines, medToAdd]);
         setNewMedicine({ name: "", times: [""], duration: "" });
+
+        window.dispatchEvent(new Event("balanceUpdated"));
+
         alert("Medicamento salvo com sucesso!");
       } else {
         const erroDoServidor = await response.json();
@@ -142,15 +145,19 @@ export default function Check({
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
         try {
-            await fetch(`http://localhost:3001/api/usuarios/${user.id}/saldo`, {
-                method: "PUT",
+            await fetch("http://localhost:3001/api/checkin/tomar", {
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ valor: 1 })
+                body: JSON.stringify({
+                  usuario_id: user.id,
+                  medicamento: medName,
+                  horario: time,
+                  })
             });
             
             window.dispatchEvent(new Event("balanceUpdated"));
             
-            alert(`Dose de ${medName} (${time}) confirmada! +5 moedas`);
+            alert(`Dose de ${medName} (${time}) confirmada! +1 moeda`);
         } catch (error) {
             console.error("Erro ao salvar moedas", error);
         }
