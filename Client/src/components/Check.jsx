@@ -9,19 +9,18 @@ export default function Check({
   const [selectedFile, setSelectedFile] = useState(null);
   const [medicines, setMedicines] = useState([]);
 
+
   const [newMedicine, setNewMedicine] = useState({
     name: "",
     times: [""],
     duration: "",
   });
-  const [coins, setCoins] = useState(0);
   const [takenDoses, setTakenDoses] = useState({});
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
 
-    // Função de buscar remédios (mantive igual)
     async function fetchMedicines() {
       try {
         const response = await fetch(`http://localhost:3001/api/checkin/${user.id}`);
@@ -41,23 +40,7 @@ export default function Check({
       }
     }
 
-    async function fetchSaldo() {
-      try {
-        const response = await fetch(`http://localhost:3001/api/usuarios/${user.id}/saldo`);
-        
-        if (response.ok) {
-          const data = await response.json();
-          setCoins(data.moedas);
-          
-          window.dispatchEvent(new Event("balanceUpdated")); 
-        }
-      } catch (error) {
-        console.error("Erro ao buscar saldo:", error);
-      }
-    }
-
     fetchMedicines();
-    fetchSaldo(); 
   }, []);
 
   const handleFileChange = (e) => {
@@ -124,37 +107,26 @@ export default function Check({
         alert("Medicamento salvo com sucesso!");
       } else {
         const erroDoServidor = await response.json();
-        console.error("Erro detalhado:", erroDoServidor);
-
-        alert(
-          `O Servidor recusou: ${
-            erroDoServidor.error || JSON.stringify(erroDoServidor)
-          }`
-        );
+        alert(`O Servidor recusou: ${erroDoServidor.error || JSON.stringify(erroDoServidor)}`);
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro de conexão com o servidor. Verifique o terminal do VS Code.");
+      alert("Erro de conexão com o servidor.");
     }
   };
 
-  const handleTakeDose = (medName, time) => {
+  const handleTakeDose = async (medName, time) => {
     const key = `${medName}-${time}`;
+    
     if (takenDoses[key]) return;
 
     const updatedTakenDoses = { ...takenDoses, [key]: true };
     setTakenDoses(updatedTakenDoses);
-    
-    setCoins(coins + 1);
-    
-    window.dispatchEvent(new Event("balanceUpdated"));
-
-    alert(`Dose de ${medName} (${time}) confirmada! +1 moeda`);
 
     const med = medicines.find((m) => m.name === medName);
     if (med) {
       const allTaken = med.times.every(
-        (t) => updatedTakenDoses[`${medName}-${t}`]
+        (t) => updatedTakenDoses[`${medName}-${t}`] 
       );
       if (allTaken) {
         setMedicines((prevMeds) =>
@@ -165,6 +137,23 @@ export default function Check({
             .filter((m) => m.duration > 0)
         );
       }
+    }
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+        try {
+            await fetch(`http://localhost:3001/api/usuarios/${user.id}/saldo`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ valor: 1 })
+            });
+            
+            window.dispatchEvent(new Event("balanceUpdated"));
+            
+            alert(`Dose de ${medName} (${time}) confirmada! +1 moeda`);
+        } catch (error) {
+            console.error("Erro ao salvar moedas", error);
+        }
     }
   };
 
@@ -203,9 +192,7 @@ export default function Check({
       <div className="page-header">Cadastro de Medicamentos</div>
 
       <h1 className="form-title">Gerencie seus horários e ganhe moedas!</h1>
-      <p>
-        <strong>Moedas:</strong> {coins}
-      </p>
+      
 
       {medicines.length > 0 && (
         <div className="medicines-list">
