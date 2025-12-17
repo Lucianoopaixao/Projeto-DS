@@ -22,7 +22,7 @@ export default function Quiz({ voltarInicio }) {
   //states (atualizar tela)
   const [questions, setQuestions] = useState([]);
   const [indice, setIndice] = useState(0);
-  const [pontuacao, setPontuacao] = useState(0); // Pontos ganhos SÓ NESTA rodada
+  const [pontuacao, setPontuacao] = useState(0); // Pontos ganhos NESTA rodada
   const [fim, setFim] = useState(false);
   const [mostrarExplicacao, setMostrarExplicacao] = useState(false);
   const [acertou, setAcertou] = useState(false);
@@ -88,9 +88,8 @@ export default function Quiz({ voltarInicio }) {
       atualizarSaldo();
     }
   }, [fim, usuarioIdNumero]);
-  // -------------------------------------------------------------
 
-  //pegarreposta, qd o usuario escolhe uma resposta, checando se acertou e mostrando explicação
+  //pegarreposta, qd o usuario escolhe uma resposta, checando se acertou e mostrando explicacao
   const pegarReposta = async (alternativa) => {
     const questaoAtual = questions[indice];
     //validcacao de usuario
@@ -193,7 +192,7 @@ export default function Quiz({ voltarInicio }) {
       <div>Pontos da rodada : {pontuacao} 🪙</div>
 
       {!mostrarExplicacao ? ( // se mostrar explicacao tiver falso, mostra pergunta
-        //se tiver verdadeiro, vai pra tela da explicação
+        //se tiver verdadeiro, vai pra tela da explicacao
         <Question
           pergunta={questions[indice].pergunta}
           alternativas={questions[indice].alternativas}

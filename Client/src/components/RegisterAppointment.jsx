@@ -3,7 +3,7 @@ import "./RegisterAppointment.css";
 
 export default function RegisterAppointment({ onBack }) {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [loading, setLoading] = useState(false); // Para desabilitar o botão durante o envio
+  const [loading, setLoading] = useState(false); // Para desabilitar o botao durante o envio
 
   const [successData, setSuccessData] = useState(null);
 
@@ -53,7 +53,7 @@ export default function RegisterAppointment({ onBack }) {
     };
 
     try {
-      // 1. Envia a consulta para o servidor
+      //Envia a consulta para o servidor
       const response = await fetch(
         "http://localhost:3001/api/consultas/registrar-consulta",
         {
@@ -68,7 +68,7 @@ export default function RegisterAppointment({ onBack }) {
         const MOEDAS_GANHAS = 10;
         let novoSaldoTotal = 0;
 
-        // --- ALTERAÇÃO: Buscando o saldo real do banco ---
+        //Buscando o saldo real do banco
         try {
           const responseSaldo = await fetch(
             `http://localhost:3001/api/usuarios/${user.id}/saldo`
@@ -82,12 +82,11 @@ export default function RegisterAppointment({ onBack }) {
             user.saldo = novoSaldoTotal; // ou user.moedas, dependendo de como você salva
             localStorage.setItem("user", JSON.stringify(user));
 
-            // --- A LINHA MÁGICA AQUI ---
             // Assim que salvamos o novo saldo, avisamos o Header
             window.dispatchEvent(new Event("balanceUpdated"));
 
           } else {
-            // Fallback: Se a rota de saldo falhar, usamos o cálculo local provisoriamente
+            // Fallback: Se a rota de saldo falhar, usamos o calculo local provisoriamente
             console.warn("Não foi possível buscar o saldo atualizado. Usando cálculo local.");
             novoSaldoTotal = (user.saldo || 0) + MOEDAS_GANHAS;
           }
@@ -95,7 +94,6 @@ export default function RegisterAppointment({ onBack }) {
           console.error("Erro ao conectar na rota de saldo:", erroSaldo);
           novoSaldoTotal = (user.saldo || 0) + MOEDAS_GANHAS;
         }
-        // --- FIM DA ALTERAÇÃO ---
 
         // Exibe a tela de sucesso com o dado que veio do Banco
         setSuccessData({

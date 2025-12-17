@@ -35,7 +35,7 @@ if (process.env.NODE_ENV !== "test") {
 
   server.on("error", (e) => {
     if (e.code === "EADDRINUSE") {
-      console.error(`Porta ${PORT} j� est� em uso!`);
+      console.error(`Porta ${PORT} ja esta em uso!`);
     } else {
       console.error("Erro no servidor:", e);
     }

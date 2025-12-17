@@ -42,7 +42,7 @@ export const login = async (req, res) => {
     const externalToken = authResponse.data.access_token;
     if (!externalToken) {
       console.error("Nenhum token retornado:", authResponse.data);
-      return res.status(500).json({ message: "Token n�o retornado" });
+      return res.status(500).json({ message: "Token nao retornado" });
     }
 
     // Obtendo as informacoes do usuario

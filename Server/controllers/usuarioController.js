@@ -11,7 +11,7 @@ async function getSaldo(req, res) {
     });
 
     if (!usuario) {
-      return res.status(404).json({ error: "Usuário não encontrado" });
+      return res.status(404).json({ error: "Usuario nao encontrado" });
     }
 
     return res.json(usuario);

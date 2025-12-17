@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-// Importações dos seus componentes
+// Importacoes dos seus componentes
 import Login from "./components/Login";
 import Quiz from "./components/Quiz";
 import FollowTreatment from "./components/FollowTreatment";
@@ -21,12 +21,12 @@ import QuizConfirmImage from "./assets/quiz.svg";
 const RotaProtegida = ({ children }) => {
   const token = localStorage.getItem("token");
 
-  // Se não tiver token, chuta o usuário para a tela de Login ("/")
+  // Se nao tiver token, chuta o usuario para a tela de Login ("/")
   if (!token) {
     return <Navigate to="/" replace />;
   }
 
-  // Se tiver token, renderiza o conteúdo (Home + Carteira)
+  // Se tiver token, renderiza o conteudo (Home + Carteira)
   return children;
 };
 
@@ -34,7 +34,7 @@ function SistemaDoJogo() {
   const [tela, setTela] = useState("Introdução");
   const [documentAccepted, setDocumentAccepted] = useState(false);
 
-  // Função para DESLOGAR
+  // Funcao para DESLOGAR
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
@@ -44,13 +44,13 @@ function SistemaDoJogo() {
     <div className="inner-wrapper">{children}</div>
   );
 
-  if (tela === "Introdução") {
-    // DICA: Se não quiser a carteira na tela de "Clique para começar", 
-    // teríamos que mudar a lógica, mas aqui ela aparecerá conforme pedido.
+  if (tela === "Introducao") {
+    //Se nao quiser a carteira na tela de "Clique para comecar", 
+    // teríamos que mudar a logica, mas aqui ela aparecera conforme pedido.
     return <div className="intro" onClick={() => setTela("Início")}></div>;
   }
 
-  if (tela === "Início") {
+  if (tela === "Ini�cio") {
     return (
       <Inicio
         irParaQuiz={() => setTela("confirmar-quiz")}
@@ -59,7 +59,7 @@ function SistemaDoJogo() {
     );
   }
 
-  // TELA DE CONFIRMAÇÃO DO QUIZ
+  // TELA DE CONFIRMACAO DO QUIZ
   if (tela === "confirmar-quiz") {
     return renderWrapper(
       <>
@@ -68,27 +68,27 @@ function SistemaDoJogo() {
 
         <img
           src={QuizConfirmImage}
-          alt="Ilustração de confirmação do Quiz"
+          alt="Ilustracao de confirmacao do Quiz"
           className="quiz-confirm-img"
         />
 
         <div className="button-row">
           <button onClick={() => setTela("quiz")}>Iniciar</button>
-          <button onClick={() => setTela("Início")}>Voltar</button>
+          <button onClick={() => setTela("Ini�cio")}>Voltar</button>
         </div>
       </>
     );
   }
 
   if (tela === "quiz") {
-    return <Quiz voltarInicio={() => setTela("Início")} />;
+    return <Quiz voltarInicio={() => setTela("Ini�cio")} />;
   }
   
   // Acompanhar tratamento
   if (tela === "acompanhar") {
     return (
       <FollowTreatment
-        onBack={() => setTela("Início")}
+        onBack={() => setTela("Inicio")}
         onFirstAction={() => setTela("registrar-consulta")}
         onSecondAction={() => setTela("check")}
       />
@@ -114,15 +114,15 @@ function SistemaDoJogo() {
   return null;
 }
 
-// --- APP PRINCIPAL EDITADO ---
+//APP PRINCIPAL
 export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Rota Pública: Login (Sem Carteira) */}
+        {/* Rota Publica: Login (Sem Carteira) */}
         <Route path="/" element={<Login />} />
 
-        {/* Rota Pública: Cadastro */}
+        {/* Rota Publica: Cadastro */}
         <Route path="/cadastro" element={<div>Cadastro</div>} />
 
         {/* Rota PROTEGIDA: Home (Com Carteira) */}

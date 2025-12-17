@@ -1,9 +1,6 @@
 import { jest } from "@jest/globals";
 
-/**
- * MOCK DO MODEL
- * (inclui default porque o controller usa import default)
- */
+//MOCK DO MODEL
 await jest.unstable_mockModule("../models/consultaModel.js", () => ({
   __esModule: true,
   default: {

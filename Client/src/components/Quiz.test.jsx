@@ -36,12 +36,10 @@ describe("Componente Quiz", () => {
     render(<Quiz voltarInicio={() => {}} />);
 
     await waitFor(() => {
-      // CORREÇÃO 1: Regex flexível para acentos
+      //Regex flexível para acentos
       // Procura por "Qual", depois qualquer coisa, depois "cor", etc.
       expect(screen.getByText(/Qual.*cor.*c.u/i)).toBeInTheDocument();
       
-      // CORREÇÃO 2: Regex flexível para quebras de linha
-      // O \s* significa "pode ter qualquer espaço ou quebra de linha aqui"
       expect(screen.getByText(/Moedas\s*:\s*0/i)).toBeInTheDocument();
     });
   });
@@ -49,15 +47,15 @@ describe("Componente Quiz", () => {
   it("Deve mostrar explicação de acerto ao clicar na resposta certa", async () => {
     render(<Quiz voltarInicio={() => {}} />);
 
-    // 1. Espera a pergunta carregar (procurando por "Qual" e "cor")
+    //Espera a pergunta carregar (procurando por "Qual" e "cor")
     await waitFor(() => screen.getByText(/Qual.*cor/i));
 
-    // 2. Clica na resposta certa
+    //Clica na resposta certa
     const botaoCorreto = screen.getByText(/azul/i);
     fireEvent.click(botaoCorreto);
 
-    // 3. Verifica a mensagem de sucesso
-    // CORREÇÃO 3: Procuramos apenas a palavra chave "acertou" para evitar erro de encoding no "Parabéns"
+    // Verifica a mensagem de sucesso
+    // Procuramos apenas a palavra chave "acertou" para evitar erro de encoding no "Parabéns"
     expect(screen.getByText(/acertou/i)).toBeInTheDocument();
     
     // Verifica a explicação (evitando o acento de 'céu' usando o ponto '.' que serve como coringa)

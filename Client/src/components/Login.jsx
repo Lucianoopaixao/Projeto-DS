@@ -47,9 +47,9 @@ const Login = () => {
     } catch (err) {
       console.error("Erro no login:", err);
       if (err.response) {
-        setError(err.response.data.message || "Credenciais inv lidas.");
+        setError(err.response.data.message || "Credenciais invalidas.");
       } else {
-        setError("Erro de conex o. O servidor est  rodando?");
+        setError("Erro de conexao. O servidor esta rodando?");
       }
     } finally {
       setLoading(false);

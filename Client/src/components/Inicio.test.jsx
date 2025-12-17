@@ -7,18 +7,17 @@ describe("Componente Inicio", () => {
     // Renderizamos o componente com funções vazias apenas para ver a tela
     render(<Inicio irParaQuiz={() => {}} irParaAcompanhar={() => {}} />);
 
-    // 1. Verifica o Título
-    // Usamos o Regex /Sa.de/ para ignorar problemas de acentuação (Saúde/SaÃºde)
+    //Verifica o Título
     expect(screen.getByText(/Sa.de em Jogo/i)).toBeInTheDocument();
 
-    // 2. Verifica as Imagens pelo texto alternativo (alt)
+    // Verifica as Imagens pelo texto alternativo 
     const imgQuiz = screen.getByAltText("quiz");
     const imgTratamento = screen.getByAltText("tratamento");
 
     expect(imgQuiz).toBeInTheDocument();
     expect(imgTratamento).toBeInTheDocument();
     
-    // Verifica se as imagens têm o src correto (opcional, mas bom pra garantir)
+    // Verifica se as imagens têm o src correto
     expect(imgQuiz).toHaveAttribute("src");
     expect(imgTratamento).toHaveAttribute("src");
   });
@@ -35,13 +34,13 @@ describe("Componente Inicio", () => {
       />
     );
 
-    // --- TESTE BOTÃO QUIZ ---
+    //TESTE BOTÃO QUIZ
     const btnQuiz = screen.getByText(/Quiz sobre ISTs/i);
     fireEvent.click(btnQuiz);
     // Esperamos que a função de ir para o quiz tenha sido chamada
     expect(mockIrParaQuiz).toHaveBeenCalledTimes(1);
 
-    // --- TESTE BOTÃO ACOMPANHAR ---
+    //TESTE BOTÃO ACOMPANHAR
     const btnAcompanhar = screen.getByText(/Acompanhar tratamento/i);
     fireEvent.click(btnAcompanhar);
     // Esperamos que a função de ir para o acompanhamento tenha sido chamada

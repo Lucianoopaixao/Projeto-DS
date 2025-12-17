@@ -71,7 +71,7 @@ export default function Check({
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user) {
-      alert("Usuário não encontrado. Faça login novamente.");
+      alert("Usuario nao encontrado. Faca login novamente.");
       return;
     }
 
@@ -80,7 +80,7 @@ export default function Check({
       !newMedicine.duration ||
       newMedicine.times.some((t) => !t)
     ) {
-      alert("Preencha todos os campos e horários antes de adicionar!");
+      alert("Preencha todos os campos e horarios antes de adicionar!");
       return;
     }
 
@@ -114,7 +114,7 @@ export default function Check({
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro de conexão com o servidor.");
+      alert("Erro de conexao com o servidor.");
     }
   };
 

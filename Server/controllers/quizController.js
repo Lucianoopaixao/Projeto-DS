@@ -10,8 +10,8 @@ async function pegarperguntas(req, res) {
     //enviando
     res.json(results);
   } catch (error) {
-    console.error("Não foi possível pegar as questos do model", error);
-    return res.status(500).json({ erro: "Erro ao buscar questões" });
+    console.error("Nao foi possi�vel pegar as questoes do model", error);
+    return res.status(500).json({ erro: "Erro ao buscar questoes" });
   }
 }
 
@@ -26,9 +26,9 @@ async function responderQuiz(req, res) {
     const { usuario_id, questao_id, resposta } = req.body;
 
     //vendo mais especifico ainda
-    if (!usuario_id) console.log("ERRO: usuario_id está faltando!");
-    if (!questao_id) console.log("ERRO: questao_id está faltando!");
-    if (!resposta) console.log("ERRO: resposta está faltando!");
+    if (!usuario_id) console.log("ERRO: usuario_id esta faltando!");
+    if (!questao_id) console.log("ERRO: questao_id esta faltando!");
+    if (!resposta) console.log("ERRO: resposta esta faltando!");
 
     if (!usuario_id || !questao_id || !resposta) {
       return res.status(400).json({ erro: "Dados incompletos" });
@@ -37,7 +37,7 @@ async function responderQuiz(req, res) {
     const questao = await quizModel.buscarQuestaoPorId(questao_id);
 
     if (!questao) {
-      return res.status(404).json({ erro: "Questão não encontrada" });
+      return res.status(404).json({ erro: "Questao nao encontrada" });
     }
 
     const acertou =

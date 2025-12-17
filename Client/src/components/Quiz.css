@@ -15,15 +15,15 @@
   align-items: center; /* Garante que a imagem e outros itens se centralizem */
 }
 
-/* 🖼️ ESTILO DA IMAGEM DO QUIZ (AJUSTADO PARA 200PX) */
+/*ESTILO DA IMAGEM DO QUIZ (AJUSTADO PARA 200PX) */
 .quiz-header-img {
-  max-width: 200px; /* Definido para ser do mesmo tamanho das imagens da tela de Início */
+  max-width: 200px; /* Definido para ser do mesmo tamanho das imagens da tela de Ini�cio */
   height: auto;
   display: block;
   margin: 10px auto; /* Adiciona margem vertical */
 }
 
-/* Títulos e parágrafos do quiz */
+/* Ti�tulos e paragrafos do quiz */
 .quiz-inner-wrapper h1 {
   color: #0d47a1;
   font-size: 2.2rem;
@@ -43,7 +43,7 @@
 .alternativas {
   display: flex;
   flex-direction: column;
-  gap: 18px; /* espaçamento entre os botões */
+  gap: 18px; /* espacamento entre os botoes */
   margin-top: 10px;
   align-items: center; /* centraliza horizontalmente */
 }
@@ -68,7 +68,7 @@
   transform: translateY(-2px);
 }
 
-/* Botão principal */
+/* Botao principal */
 .btn-quiz {
   padding: 14px 24px;
   border-radius: 12px;

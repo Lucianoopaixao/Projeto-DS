@@ -8,11 +8,11 @@ describe("Componente Check (Check-in de Tratamento)", () => {
     global.alert = vi.fn();
     localStorage.setItem("user", JSON.stringify({ id: 123, name: "Teste" }));
 
-    // --- MOCK MAIS INTELIGENTE ---
-    // Agora ele olha os 'options' para saber se é POST ou GET
+    //MOCK
+    //ele olha os 'options' para saber se é POST ou GET
     global.fetch = vi.fn((url, options) => {
       
-      // Se tiver method: "POST", retorna sucesso genérico
+      // Se tiver method: POST, retorna sucesso genérico
       if (options && options.method === "POST") {
         return Promise.resolve({
           ok: true,
@@ -33,7 +33,7 @@ describe("Componente Check (Check-in de Tratamento)", () => {
     localStorage.clear();
   });
 
-  // --- CENÁRIO 1: Upload de Documento ---
+  //Upload de Documento
   it("Deve mostrar tela de upload se documento não foi aceito", async () => {
     const mockSetDocumentAccepted = vi.fn();
 
@@ -45,7 +45,7 @@ describe("Componente Check (Check-in de Tratamento)", () => {
       />
     );
 
-    // Espera o fetch inicial (mesmo que não seja usado nessa tela, o componente pode chamar)
+    // Espera o fetch inicial, mesmo que não seja usado nessa tela, o componente pode chamar
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
 
     expect(screen.getByText(/Check-in de Tratamento/i)).toBeInTheDocument();
@@ -63,7 +63,7 @@ describe("Componente Check (Check-in de Tratamento)", () => {
     expect(mockSetDocumentAccepted).toHaveBeenCalledWith(true);
   });
 
-  // --- CENÁRIO 2: Cadastro de Remédios ---
+  //Cadastro de Remédios
   it("Deve permitir cadastrar um novo medicamento", async () => {
     const { container } = render(
       <Check 
@@ -73,9 +73,6 @@ describe("Componente Check (Check-in de Tratamento)", () => {
       />
     );
 
-    // [CORREÇÃO CRUCIAL] 
-    // Esperamos o primeiro fetch (GET do useEffect) terminar antes de interagir.
-    // Isso evita que o carregamento inicial sobrescreva o remédio que vamos adicionar.
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1));
 
     // Verifica se está na tela certa

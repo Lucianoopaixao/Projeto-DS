@@ -16,11 +16,10 @@ describe("Componente Question", () => {
       />
     );
 
-    // 1. Verifica se a pergunta está na tela
+    //Verifica se a pergunta está na tela
     expect(screen.getByText(perguntaTeste)).toBeInTheDocument();
 
-    // 2. Verifica se TODAS as alternativas estão na tela
-    // O forEach é ótimo para não ter que escrever 4 expects iguais
+    //Verifica se TODAS as alternativas estão na tela
     alternativasTeste.forEach((opcao) => {
       expect(screen.getByRole("button", { name: opcao })).toBeInTheDocument();
     });
@@ -44,7 +43,7 @@ describe("Componente Question", () => {
     // Verifica se a função foi chamada
     expect(mockOnResposta).toHaveBeenCalledTimes(1);
 
-    // O MAIS IMPORTANTE: Verifica se ele enviou o texto "Roxo" para a função
+    //Verifica se ele enviou o texto "Roxo" para a função
     // Se ele enviar "Azul" ou o índice (2), o teste falha
     expect(mockOnResposta).toHaveBeenCalledWith("Roxo");
   });

@@ -10,12 +10,11 @@ await jest.unstable_mockModule("../controllers/loginController.js", () => ({
   }
 }));
 
-// CORREÇÃO: Importa do index.js
+//Importa do index.js
 const app = (await import("../index.js")).default;
 
 describe("Login Routes (Black Box)", () => {
   test("POST /login retorna 401", async () => {
-    // CORREÇÃO: Rota simplificada (/login) para bater com o index.js
     const response = await request(app)
       .post("/login")
       .send({

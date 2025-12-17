@@ -38,29 +38,29 @@ describe("Componente RegisterAppointment", () => {
     // Desta vez usamos 'container' para achar o input facilmente
     const { container } = render(<RegisterAppointment onBack={() => {}} />);
 
-    // 1. Achar o input de arquivo pelo seletor HTML simples
+    //Achar o input de arquivo pelo seletor HTML simples
     const input = container.querySelector('input[type="file"]');
     
-    // 2. Criar arquivo falso
+    //Criar arquivo falso
     const file = new File(["(imagem_fake)"], "comprovante.png", { type: "image/png" });
 
-    // 3. Simular o upload
+    //Simular o upload
     // Usamos waitFor para garantir que o React processe o FileReader
     await waitFor(() => {
         fireEvent.change(input, { target: { files: [file] } });
     });
 
-    // 4. Verificar se o texto do arquivo apareceu (prova que o state atualizou)
+    //Verificar se o texto do arquivo apareceu (prova que o state atualizou)
     await waitFor(() => {
         expect(screen.getByText(/comprovante.png/i)).toBeInTheDocument();
     });
 
-    // 5. Clicar em Enviar (Agora o botão deve estar habilitado)
+    //Clicar em Enviar (Agora o botão deve estar habilitado)
     const btnEnviar = screen.getByRole("button", { name: /Enviar Comprovante/i });
     expect(btnEnviar).toBeEnabled();
     fireEvent.click(btnEnviar);
 
-    // 6. Verificar tela de sucesso
+    //Verificar tela de sucesso
     await waitFor(() => {
         expect(screen.getByText(/Consulta Registrada/i)).toBeInTheDocument();
         expect(screen.getByText(/\+10/i)).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe("Componente RegisterAppointment", () => {
     
     const { container } = render(<RegisterAppointment onBack={() => {}} />);
     
-    // --- TRUQUE: Precisamos selecionar uma imagem para o botão habilitar ---
+    //Precisamos selecionar uma imagem para o botão habilitar
     // Se não fizermos isso, o botão fica disabled e o clique não funciona
     const input = container.querySelector('input[type="file"]');
     const file = new File(["foo"], "teste.png", { type: "image/png" });

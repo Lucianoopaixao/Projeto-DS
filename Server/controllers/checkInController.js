@@ -77,7 +77,7 @@ async function tomarDose(req, res) {
     const { usuario_id } = req.body;
 
     if (!usuario_id) {
-      return res.status(400).json({ error: "Usuário inválido" });
+      return res.status(400).json({ error: "Usuario invalido" });
     }
 
     await prisma.user.update({

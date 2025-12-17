@@ -1,6 +1,4 @@
-/* ========================================================================= */
-/* ESTILOS GLOBAIS / RESET                      */
-/* ========================================================================= */
+/* ESTILOS GLOBAIS / RESET */
 
 html,
 body,
@@ -19,9 +17,8 @@ body,
   background: linear-gradient(135deg, #f0f4fd 0%, #e2eafc 100%);
 }
 
-/* ========================================================================= */
-/* BLOCO PRINCIPAL (WRAPPER)                      */
-/* ========================================================================= */
+/* BLOCO PRINCIPAL (WRAPPER) */
+
 
 .form-wrapper {
   width: 90%;
@@ -37,9 +34,7 @@ body,
   text-align: center;
 }
 
-/* ========================================================================= */
-/* CABEÇALHO DA PÁGINA                          */
-/* ========================================================================= */
+/* CABECALHO DA PAGINA */
 
 .page-header {
   width: 100%;
@@ -54,9 +49,8 @@ body,
   margin-bottom: 16px;
 }
 
-/* ========================================================================= */
-/* TÍTULOS E TEXTOS                               */
-/* ========================================================================= */
+/* TITULOS E TEXTOS */
+
 
 .form-title {
   font-size: 1.8rem;
@@ -76,15 +70,13 @@ p {
   color: #0f2b68;
 }
 
-/* ========================================================================= */
-/* FORMULÁRIO DE CADASTRO (CORRIGIDO)             */
-/* ========================================================================= */
+/* FORMULARIO DE CADASTRO */
 
 .form-body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* Centraliza horizontalmente todos os elementos filhos (inputs e botões) */
+  /* Centraliza horizontalmente todos os elementos filhos (inputs e botoes) */
   align-items: center;
   width: 100%;
 }
@@ -102,9 +94,7 @@ select {
   text-align: left;
 }
 
-/* ========================================================================= */
-/* SEÇÃO DE UPLOAD DE DOCUMENTO                   */
-/* ========================================================================= */
+/* SECAO DE UPLOAD DE DOCUMENTO */
 
 .upload-section {
   display: flex;
@@ -133,9 +123,7 @@ select {
   max-width: 350px;
 }
 
-/* ========================================================================= */
-/* ESTILOS DE BOTÕES                              */
-/* ========================================================================= */
+/* ESTILOS DE BOTOES */
 
 .btn {
   padding: 12px 20px;
@@ -151,7 +139,7 @@ select {
   background-color: #0f2b68;
   color: white;
   border: none;
-  /* Aplica largura consistente ao botão principal do formulário */
+  /* Aplica largura consistente ao botao principal do formulario */
   width: 80%;
   max-width: 400px;
 }
@@ -177,15 +165,14 @@ select {
   border-color: #d1d5db;
 }
 
-/* Garante que o botão de adicionar horário tenha a mesma largura dos inputs */
+/* Garante que o botao de adicionar horario tenha a mesma largura dos inputs */
 .form-body .btn-secondary {
   width: 80%;
   max-width: 400px;
 }
 
-/* ========================================================================= */
-/* LISTA DE MEDICAMENTOS                          */
-/* ========================================================================= */
+/* LISTA DE MEDICAMENTOS */
+
 
 .medicines-list {
   display: flex;
@@ -255,9 +242,7 @@ select {
   padding-left: 20px;
 }
 
-/* ========================================================================= */
-/* FOOTER DE AÇÕES                             */
-/* ========================================================================= */
+/* FOOTER */
 
 .actions-footer {
   display: flex;

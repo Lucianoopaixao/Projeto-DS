@@ -1,4 +1,4 @@
-/* ================= Reset e CSS global ================= */
+/*Reset e CSS global */
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -13,7 +13,7 @@ html, body, #root {
   overflow-y: auto;
 }
 
-/* ================= Bloco principal ================= */
+/* Bloco principal */
 
 .form-wrapper {
   width: 90%;
@@ -30,7 +30,7 @@ html, body, #root {
 }
 
 
-/* ================= Títulos e textos ================= */
+/* Ti�tulos e textos */
 .form-title {
   font-size: 1.8rem; 
   color: #0f2b68;
@@ -43,7 +43,7 @@ p {
   margin-bottom: 8px;
 }
 
-/* ================= Lista de medicamentos ================= */
+/* Lista de medicamentos */
 .medicines-list {
   display: flex;
   flex-direction: column;
@@ -97,7 +97,7 @@ p {
   color: #0f2b68;
 }
 
-/* ================= Horários do medicamento ================= */
+/* Horarios do medicamento */
 .medicines-list li ul {
   list-style: none;
   padding-left: 0;
@@ -113,7 +113,7 @@ p {
   padding-left: 20px; 
 }
 
-/* ================= Formulário vertical ================= */
+/* Formulario vertical */
 .form-body {
   display: flex;
   flex-direction: column;
@@ -136,7 +136,7 @@ p {
   color: #0f2b68;
 }
 
-/* Botões */
+/* Botoes */
 .btn {
   padding: 12px 20px; 
   border-radius: 8px;
@@ -174,7 +174,7 @@ p {
   border-color: #d1d5db;
 }
 
-/* ================= Footer ================= */
+/* Footer */
 .actions-footer {
   display: flex;
   justify-content: center;
@@ -182,7 +182,7 @@ p {
   padding-top: 12px;
   margin-top: 0.8rem;
 }
-/* ================= Cabeçalho ================= */
+/* Cabecalho */
 .page-header {
   width: 100%;
   background-color: #0f2b68;

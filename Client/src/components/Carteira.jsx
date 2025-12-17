@@ -42,14 +42,14 @@ export default function Carteira() {
     // Usando a classe do CSS puro
     <div className="carteira-container">
       
-      {/* Ícone da moeda */}
+      {/* icone da moeda */}
       <div className="carteira-icon">🪙</div>
       
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {loading ? (
           <Loader2 className="animate-spin" size={24} color="#ccc" />
         ) : (
-          /* Número do saldo */
+          /* Numero do saldo */
           <span className="carteira-saldo">
             {Math.floor(moedas)}
           </span>

@@ -1,9 +1,7 @@
 import { jest } from "@jest/globals";
 import request from "supertest";
 
-/**
- * MOCK DO MODEL DO QUIZ
- */
+//MOCK DO MODEL DO QUIZ
 await jest.unstable_mockModule("../models/quizModel.js", () => ({
   __esModule: true,
   default: {
@@ -12,7 +10,7 @@ await jest.unstable_mockModule("../models/quizModel.js", () => ({
   retornarquestoes: jest.fn().mockResolvedValue([])
 }));
 
-// CORREÇÃO: Importa do index.js
+//Importa do index.js
 const app = (await import("../index.js")).default;
 
 describe("Quiz API (Black Box)", () => {

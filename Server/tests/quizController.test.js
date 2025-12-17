@@ -1,8 +1,6 @@
 import { jest } from "@jest/globals";
 
-/**
- * MOCK DO MODEL
- */
+//MOCK DO MODEL
 await jest.unstable_mockModule("../models/quizModel.js", () => ({
   default: {
     retornarquestoes: jest.fn()

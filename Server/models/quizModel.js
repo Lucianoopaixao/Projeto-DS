@@ -4,7 +4,7 @@ async function retornarquestoes() {
   try {
     return await prisma.questoes.findMany();
   } catch (error) {
-    console.error("Não conseguiu achar questões", error);
+    console.error("Não conseguiu achar questoes", error);
     throw error;
   }
 }

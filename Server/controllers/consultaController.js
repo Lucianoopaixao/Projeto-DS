@@ -8,11 +8,11 @@ async function cadastrar(req, res) {
     const idNumerico = Number(usuario_id);
 
     if (!idNumerico || isNaN(idNumerico)) {
-      return res.status(400).json({ erro: "ID do usuário inválido." });
+      return res.status(400).json({ erro: "ID do usuario invalido." });
     }
 
     if (!anexo_consulta) {
-      return res.status(400).json({ erro: "O comprovante é obrigatório." });
+      return res.status(400).json({ erro: "O comprovante e obrigatorio." });
     }
 
     const anexoPlaceholder = "COMPROVANTE_VALIDADO_COM_SUCESSO";
