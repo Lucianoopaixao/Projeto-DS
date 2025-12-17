@@ -15,13 +15,12 @@ describe("Componente de Login (UI)", () => {
   it("Deve mostrar os campos de CPF e Senha na tela", () => {
     renderLogin();
 
-    // CORREÇÃO: Usando o texto exato que está no seu placeholder
+    //Usando o texto exato que está no seu placeholder
     expect(screen.getByPlaceholderText("000.000.000-00")).toBeInTheDocument();
     
-    // CORREÇÃO: O placeholder da senha são asteriscos
+    //O placeholder da senha são asteriscos
     expect(screen.getByPlaceholderText("********")).toBeInTheDocument();
     
-    // O botão continua igual
     const botao = screen.getByRole("button", { name: /entrar|login|acessar/i });
     expect(botao).toBeInTheDocument();
   });

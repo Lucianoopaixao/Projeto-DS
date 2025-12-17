@@ -41,18 +41,18 @@ describe("Componente FollowTreatment", () => {
       />
     );
 
-    // --- TESTE 1: Botão Check-in ---
+    //TESTE 1 Botão Check-in 
     const btnCheckIn = screen.getByRole("button", { name: /fazer check-in/i });
     fireEvent.click(btnCheckIn);
     // Verifica se a função mockCheckIn foi chamada 1 vez
     expect(mockCheckIn).toHaveBeenCalledTimes(1);
 
-    // --- TESTE 2: Botão Registrar Consulta ---
+    //TESTE 2 Botão Registrar Consulta 
     const btnRegistrar = screen.getByRole("button", { name: /registrar consulta/i });
     fireEvent.click(btnRegistrar);
     expect(mockRegistrar).toHaveBeenCalledTimes(1);
 
-    // --- TESTE 3: Botão Voltar ---
+    //TESTE 3 Botão Voltar 
     const btnVoltar = screen.getByRole("button", { name: /voltar/i });
     fireEvent.click(btnVoltar);
     expect(mockVoltar).toHaveBeenCalledTimes(1);

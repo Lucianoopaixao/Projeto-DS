@@ -1,7 +1,7 @@
 // FollowTreatment.jsx
 
 import "./FollowTreatment.css";
-// Certifique-se de que os caminhos para as imagens estão corretos!
+// Certifique-se de que os caminhos para as imagens estao corretos!
 import CheckInIcon from "../assets/check.svg"; // Imagem para Fazer Check-in
 import ConsultaIcon from "../assets/consulta.svg"; // Imagem para Registrar consulta
 
@@ -29,9 +29,9 @@ export default function FollowTreatment({
         />
       </div>
 
-      {/* Usa a classe da linha de botões da tela 'Inicio' */}
+      {/* Usa a classe da linha de botoes da tela 'Inicio' */}
       <div className="inicio-buttons-row">
-        {/* Ordem dos botões corresponde à ordem das imagens acima */}
+        {/* Ordem dos botoes corresponde a� ordem das imagens acima */}
         <button className="btn-primary" onClick={onSecondAction}>
           Fazer Check-in
         </button>
@@ -40,7 +40,7 @@ export default function FollowTreatment({
         </button>
       </div>
 
-      {/* O botão Voltar pode ser mantido fora do layout principal ou ajustado */}
+      {/* O botao Voltar pode ser mantido fora do layout principal ou ajustado */}
       <div className="ft-back">
         <button className="btn-secondary" onClick={onBack}>
           Voltar

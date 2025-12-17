@@ -1,8 +1,6 @@
 import { jest } from "@jest/globals";
 
-/**
- * MOCK DO AXIOS
- */
+// MOCK DO AXIOS
 await jest.unstable_mockModule("axios", () => ({
   default: {
     post: jest.fn(),
@@ -10,9 +8,7 @@ await jest.unstable_mockModule("axios", () => ({
   }
 }));
 
-/**
- * MOCK DO PRISMA
- */
+//MOCK DO PRISMA
 await jest.unstable_mockModule("@prisma/client", () => ({
   PrismaClient: jest.fn(() => ({
     user: {

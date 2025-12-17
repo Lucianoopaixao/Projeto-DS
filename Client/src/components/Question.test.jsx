@@ -44,7 +44,7 @@ describe("Componente Question", () => {
     // Verifica se a função foi chamada
     expect(mockOnResposta).toHaveBeenCalledTimes(1);
 
-    // O MAIS IMPORTANTE: Verifica se ele enviou o texto "Roxo" para a função
+    // O MAIS IMPORTANTE, Verifica se ele enviou o texto "Roxo" para a função
     // Se ele enviar "Azul" ou o índice (2), o teste falha
     expect(mockOnResposta).toHaveBeenCalledWith("Roxo");
   });

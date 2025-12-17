@@ -3,7 +3,7 @@ import "./RegisterAppointment.css";
 
 export default function RegisterAppointment({ onBack }) {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [loading, setLoading] = useState(false); // Para desabilitar o botão durante o envio
+  const [loading, setLoading] = useState(false); // Para desabilitar o botao durante o envio
 
   const [successData, setSuccessData] = useState(null);
 

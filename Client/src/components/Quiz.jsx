@@ -59,13 +59,13 @@ export default function Quiz({ voltarInicio }) {
       });
   }, []);
 
-  //pegarreposta, qd o usuario escolhe uma resposta, checando se acertou e mostrando explicação
+  //pegarreposta, qd o usuario escolhe uma resposta, checando se acertou e mostrando explicacao
   const pegarReposta = async (alternativa) => {
     const questaoAtual = questions[indice];
     //validcacao de usuario
     if (!usuarioIdNumero || usuarioIdNumero <= 0) {
-      console.error("Usuário não logado, ID inválido ou falha na leitura.");
-      alert("Sua sessão expirou ou o login é necessário para responder.");
+      console.error("Usuario nao logado, ID invalido ou falha na leitura.");
+      alert("Sua sessao expirou ou o login e necessario para responder.");
       return;
     }
 
@@ -151,7 +151,7 @@ export default function Quiz({ voltarInicio }) {
       <div>Moedas : {pontuacao} 🪙</div>
 
       {!mostrarExplicacao ? ( // se mostrar explicacao tiver falso, mostra pergunta
-        //se tiver verdadeiro, vai pra tela da explicação
+        //se tiver verdadeiro, vai pra tela da explicacao
         <Question
           pergunta={questions[indice].pergunta}
           alternativas={questions[indice].alternativas}

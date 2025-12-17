@@ -124,7 +124,7 @@ export default function Check({
         const erroDoServidor = await response.json();
         console.error("Erro detalhado:", erroDoServidor);
 
-        // O alerta vai mostrar exatamente O QUE est� errado
+        // O alerta vai mostrar exatamente O QUE estiver errado
         alert(
           `O Servidor recusou: ${
             erroDoServidor.error || JSON.stringify(erroDoServidor)
@@ -133,7 +133,7 @@ export default function Check({
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro de conex�o com o servidor. Verifique o terminal do VS Code.");
+      alert("Erro de conexao com o servidor. Verifique o terminal do VS Code.");
     }
   };
 
