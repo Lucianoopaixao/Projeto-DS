@@ -27,7 +27,7 @@ O objetivo foi amenizar a exposição, implementando também um sistema de **Gam
 * **Quiz Educativo:** Perguntas focadas no combate à desinformação sobre ISTs.
 * **Sistema de Gamificação:** Lógica de negócio que converte ações de saúde (uploads) em saldo de pontos.
 * **Upload de Comprovantes:** Envio de arquivos com validação de segurança.
-* **Dashboard Interativo:** Painel do usuário com histórico de saúde e pontuação atualizada.
+* **Dashboard Interativo:** Painel do usuário com histórico de medicamentos e pontuação atualizada.
 
 ---
 
@@ -77,4 +77,3 @@ Utilizamos **Pytest** com foco em integridade e segurança.
 - Mateus 
 
 ---
-*Disclaimer: Este software foi desenvolvido para fins educacionais e de prototipagem.*
