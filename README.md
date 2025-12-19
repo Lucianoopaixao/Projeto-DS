@@ -17,9 +17,45 @@ O objetivo foi amenizar a exposição, implementando também um sistema de **Gam
 
 ## Galeria do Projeto:
 
-### Tela de Login:
-<img width="1890" height="893" alt="login png" src="https://github.com/user-attachments/assets/795cd3f4-c893-4dfd-89bd-4365c12dac36" />
+<h3 align="center"> Tela de Login:</h3>
+<div align="center">
+  <img width="1890" alt="login png" src="https://github.com/user-attachments/assets/795cd3f4-c893-4dfd-89bd-4365c12dac36" />
+</div>
 
+<br>
+
+<h3 align="center"> Tela de Início:</h3>
+<div align="center">
+  <img width="1434" alt="telainicial png" src="https://github.com/user-attachments/assets/bf89be14-28f2-4699-b10c-9e8249df067d" />
+</div>
+
+<br>
+
+<h3 align="center"> Quiz:</h3>
+<div align="center">
+  <img width="1433" alt="quiz png" src="https://github.com/user-attachments/assets/2c05f200-693c-4613-9c29-a839e02c1e89" />
+</div>
+
+<br>
+
+<h3 align="center"> Tela Acompanhar Tratamento:</h3>
+<div align="center">
+  <img width="1413" alt="acompanhartratamento png" src="https://github.com/user-attachments/assets/f1f7404e-6e29-4fe1-be46-67f3580deacb" />
+</div>
+
+<br>
+
+<h3 align="center"> Tela de Check-in:</h3>
+<div align="center">
+  <img width="1414" alt="checkin png" src="https://github.com/user-attachments/assets/608a8ae6-5ca5-4a60-8d0c-5de914b920c7" />
+</div>
+
+<br>
+
+<h3 align="center"> Tela de Consultas:</h3>
+<div align="center">
+  <img width="1439" alt="consulta png" src="https://github.com/user-attachments/assets/18076053-5a6d-4b6d-9d6c-829b01134198" />
+</div>
 
 ## Funcionalidades:
 
@@ -36,7 +72,7 @@ O objetivo foi amenizar a exposição, implementando também um sistema de **Gam
 A qualidade de software foi o pilar central deste desenvolvimento. Utilizamos uma abordagem híbrida de testes automatizados para garantir a estabilidade do sistema.
 
 ### 1. Frontend (Component Testing & UI)
-Utilizamos **Jest** e **React Testing Library** rodando em ambiente simulado (JSDOM/Headless) para garantir performance e isolamento.
+Utilizamos **Vitest** e **React Testing Library** rodando em ambiente simulado (JSDOM/Headless) para garantir performance e isolamento.
 
 * **Mocking de Rede (Axios):** Implementamos interceptadores de requisições para simular cenários de:
     * *Sucesso:* Carregamento correto do dashboard.
@@ -45,7 +81,7 @@ Utilizamos **Jest** e **React Testing Library** rodando em ambiente simulado (JS
 * **Testes de Usabilidade (Black Box):** Validação de estados condicionais. Exemplo: O botão de "Enviar" permanece bloqueado (`disabled`) até que o usuário anexe um arquivo válido.
 
 ### 2. Backend (API & Lógica)
-Utilizamos **Pytest** com foco em integridade e segurança.
+Utilizamos **Jest** com foco em integridade e segurança.
 
 * **Validação de Segurança (Status Codes):** Testes automatizados verificam se rotas protegidas retornam estritamente `401 Unauthorized` para acessos indevidos.
 * **Regras de Negócio (Integração):** Automação do fluxo "Saúde vira Pontos". O teste simula o envio de um comprovante e verifica no banco se o saldo foi incrementado.
@@ -74,6 +110,6 @@ Utilizamos **Pytest** com foco em integridade e segurança.
 - Lavinya Souza  
 - Luciano Paixão  
 - Marcos Silva
-- Mateus 
+- Mateus Barbosa
 
 ---
