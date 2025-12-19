@@ -99,7 +99,6 @@ Utilizamos **Jest** com foco em integridade e segurança.
 **Backend:**
 * Framework Web 
 * Jest & React Testing Library
-* Pytest & Pytest-cov
 * Postman (Testes manuais de API)
 
 ---
